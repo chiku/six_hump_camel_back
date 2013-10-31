@@ -40,6 +40,7 @@ describe "Population" do
 
   describe "for camel hump back problem" do
     it "has a solution" do
+      skip "don't run end-to-end test as a part of unit test suite"
       population = Population.new(100, 2, [-3.0, -2.0], [3.0, 2.0], lambda {|x, y|  ( 4.0 - 2.1*x*x +  x*x*x*x/3.0) * x*x + x*y + ( -4.0  +  4.0*y*y) * y*y })
       vector, value, generations = population.differential_evolution(200000, 0.0)
 
