@@ -13,7 +13,7 @@ class Population
     @fitness_criteria = fitness_criteria
     @difference_factor = difference_factor
     @crossingover_factor = crossingover_factor
-    @vectors = @population.times.map { Vector.new(degree, @constraints, @fitness_criteria) }
+    @vectors = @population.times.map { Vector.new(@constraints, @fitness_criteria) }
     @total_fitness = @vectors.reduce(0) { |acc, vector| acc + vector.fitness }
   end
 
@@ -33,7 +33,7 @@ class Population
     end
     
     constraints = values.map { |value| Constraint.new(min: value, max: value) }
-    Vector.new(@degree, constraints, @fitness_criteria)
+    Vector.new(constraints, @fitness_criteria)
   end
 
   def best_vector
@@ -49,7 +49,7 @@ class Population
     end
 
     constraints = values.map { |value| Constraint.new(min: value, max: value) }
-    Vector.new(@degree, constraints, @fitness_criteria)
+    Vector.new(constraints, @fitness_criteria)
   end
 
   def differential_evolution(max_generations, precision)
