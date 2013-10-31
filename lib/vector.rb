@@ -4,7 +4,7 @@ class Vector
   attr_reader :degree, :fitness, :member
 
   def initialize(degree, constraints, fitness_strategy, randomize=true)
-    @degree = degree
+    @degree = constraints.size
     @fitness_strategy = fitness_strategy
 
     if randomize
@@ -14,7 +14,6 @@ class Vector
       @member = constraints.map(&:min)
       @fitness = 0
     end
-
   end
 
   def [](index)
