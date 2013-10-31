@@ -4,12 +4,10 @@ require File.expand_path("../vector", __FILE__)
 class Population
   attr_reader :population
 
-  def initialize(population, degree, min_constraints, max_constraints, fitness_criteria, difference_factor=0.5, crossingover_factor=0.5)
+  def initialize(population, min_constraints, max_constraints, fitness_criteria, difference_factor=0.5, crossingover_factor=0.5)
     @population = population
-    @degree = degree
     @constraints = min_constraints.zip(max_constraints).map { |min, max| Constraint.new(min: min, max: max) }
-    @max_constraints = max_constraints
-    @min_constraints = min_constraints
+    @degree = @constraints.size
     @fitness_criteria = fitness_criteria
     @difference_factor = difference_factor
     @crossingover_factor = crossingover_factor
