@@ -11,10 +11,10 @@ describe "Constraint" do
     end
   end
 
-  describe "#rand" do
+  describe "#random" do
     it "is a value between inside the range" do
       constraint.randomizer = -> { 0.5 }
-      constraint.rand.must_equal 0.5
+      constraint.random.must_equal 0.5
     end
   end
 end

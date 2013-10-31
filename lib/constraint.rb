@@ -13,7 +13,7 @@ class Constraint
     @randomizer = randomizer
   end
 
-  def rand
+  def random
     (@randomizer.call * range) + @min
   end
 end

@@ -1,3 +1,5 @@
+require File.expand_path("../constraint", __FILE__)
+
 class Vector
   attr_reader :degree, :fitness, :member
 
@@ -7,8 +9,8 @@ class Vector
 
     @member = Array.new(@degree)
     @member.each_with_index do |each_value, index|
-      range = max_constraints[index] - min_constraints[index]
-      @member[index] = (randomize || range == 0)  ? rand() * range + min_constraints[index] : min_constraints[index].to_f
+      constraints = Constraint.new(min: min_constraints[index], max: max_constraints[index])
+      @member[index] = (randomize || range == 0) ? constraints.random : min_constraints[index].to_f
     end
 
     @fitness = randomize ? @fitness_strategy.call(*@member) : 0
