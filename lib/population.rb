@@ -11,14 +11,8 @@ class Population
     @fitness_criteria = fitness_criteria
     @difference_factor = difference_factor
     @crossingover_factor = crossingover_factor
-    @vectors = Array.new(@population)
-
-    @total_fitness = 0
-    @vectors.each_with_index do |each_vector, index|
-      @vectors[index] = Vector.new(degree, @min_constraints, @max_constraints, @fitness_criteria)
-      @total_fitness += @vectors[index].fitness
-    end
-
+    @vectors = @population.times.map { Vector.new(degree, @min_constraints, @max_constraints, @fitness_criteria) }
+    @total_fitness = @vectors.reduce(0) { |acc, vector| acc + vector.fitness }
   end
 
   def [](index)
