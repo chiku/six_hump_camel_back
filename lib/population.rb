@@ -1,4 +1,4 @@
-require "./vector"
+require File.expand_path("../vector", __FILE__)
 
 class Population
   attr_reader :population

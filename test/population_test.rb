@@ -1,5 +1,5 @@
 require "test/unit"
-require "./population"
+require File.expand_path("../../lib/population", __FILE__)
 
 class PopulationTest < Test::Unit::TestCase
   def test_first_vector_in_population_one_can_be_accessed

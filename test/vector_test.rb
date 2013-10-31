@@ -1,5 +1,5 @@
 require "test/unit"
-require "./vector"
+require File.expand_path("../../lib/population", __FILE__)
 
 class VectorTest < Test::Unit::TestCase
 
