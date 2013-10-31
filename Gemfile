@@ -6,6 +6,6 @@ end
 
 group :test do
   gem "minitest", "~> 4.0"
-  # gem "minitest-reporters"
-  # gem "simplecov"
+  gem "minitest-reporters"
+  gem "simplecov"
 end
