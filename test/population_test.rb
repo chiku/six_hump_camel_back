@@ -6,7 +6,7 @@ describe "Population" do
   describe "the first vector" do
     it "is accessible" do
       constraints = [Constraint.new(min: 1, max: 1), Constraint.new(min: 2, max: 2)]
-      vector = Vector.new(2, constraints, [1, 2], [1, 2], lambda {|i, j| i + j})
+      vector = Vector.new(2, constraints, lambda {|i, j| i + j})
       population = Population.new(1, 2, [1, 2], [1, 2], lambda {|i, j| i + j})
       assert_equal(vector, population[0])
     end

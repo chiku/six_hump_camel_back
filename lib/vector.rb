@@ -3,7 +3,7 @@ require File.expand_path("../constraint", __FILE__)
 class Vector
   attr_reader :degree, :fitness, :member
 
-  def initialize(degree, constraints, min_constraints, max_constraints, fitness_strategy, randomize=true)
+  def initialize(degree, constraints, fitness_strategy, randomize=true)
     @degree = degree
     @fitness_strategy = fitness_strategy
 
