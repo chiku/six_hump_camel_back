@@ -3,17 +3,12 @@ require File.expand_path("../constraint", __FILE__)
 class Vector
   attr_reader :degree, :fitness, :member
 
-  def initialize(constraints, fitness_strategy, randomize=true)
+  def initialize(constraints, fitness_strategy)
     @degree = constraints.size
     @fitness_strategy = fitness_strategy
 
-    if randomize
-      @member = constraints.map(&:random)
-      @fitness = @fitness_strategy.call(*@member)
-    else
-      @member = constraints.map(&:min)
-      @fitness = 0
-    end
+    @member = constraints.map(&:random)
+    @fitness = @fitness_strategy.call(*@member)
   end
 
   def [](index)
