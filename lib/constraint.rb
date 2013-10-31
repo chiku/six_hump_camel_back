@@ -1,4 +1,6 @@
 class Constraint
+  attr_reader :min, :max
+
   def initialize(options)
     @min        = options[:min]
     @max        = options[:max]

@@ -1,3 +1,4 @@
+require File.expand_path("../constraint", __FILE__)
 require File.expand_path("../vector", __FILE__)
 
 class Population
@@ -6,12 +7,13 @@ class Population
   def initialize(population, degree, min_constraints, max_constraints, fitness_criteria, difference_factor=0.5, crossingover_factor=0.5)
     @population = population
     @degree = degree
+    @constraints = min_constraints.zip(max_constraints).map { |min, max| Constraint.new(min: min, max: max) }
     @max_constraints = max_constraints
     @min_constraints = min_constraints
     @fitness_criteria = fitness_criteria
     @difference_factor = difference_factor
     @crossingover_factor = crossingover_factor
-    @vectors = @population.times.map { Vector.new(degree, @min_constraints, @max_constraints, @fitness_criteria) }
+    @vectors = @population.times.map { Vector.new(degree, @constraints, @min_constraints, @max_constraints, @fitness_criteria) }
     @total_fitness = @vectors.reduce(0) { |acc, vector| acc + vector.fitness }
   end
 
@@ -30,7 +32,8 @@ class Population
       values[index] = base_vector[index] + @difference_factor * (self[r2][index] - self[r3][index])
     end
     
-    Vector.new(@degree, values, values, @fitness_criteria)
+    constraints = values.map { |value| Constraint.new(min: value, max: value) }
+    Vector.new(@degree, constraints, values, values, @fitness_criteria)
   end
 
   def best_vector
@@ -45,7 +48,8 @@ class Population
       values[index] = rand() < @crossingover_factor ? vector[index] : self[rand(@population)][index]
     end
 
-    Vector.new(@degree, values, values, @fitness_criteria)
+    constraints = values.map { |value| Constraint.new(min: value, max: value) }
+    Vector.new(@degree, constraints, values, values, @fitness_criteria)
   end
 
   def differential_evolution(max_generations, precision)
