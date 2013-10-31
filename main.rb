@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require File.expand_path("../lib/population", __FILE__)
 
 def camel_hump_back_problem
