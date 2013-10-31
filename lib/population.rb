@@ -4,7 +4,7 @@ require File.expand_path("../vector", __FILE__)
 class Population
   attr_reader :population
 
-  def initialize(population, constraints, min_constraints, max_constraints, fitness_criteria, difference_factor=0.5, crossingover_factor=0.5)
+  def initialize(population, constraints, fitness_criteria, difference_factor=0.5, crossingover_factor=0.5)
     @population = population
     @constraints = constraints
     @degree = @constraints.size
