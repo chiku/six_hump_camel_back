@@ -1,7 +1,8 @@
-require "test/unit"
+require File.expand_path("../test_helper", __FILE__)
+
 require File.expand_path("../../lib/population", __FILE__)
 
-class VectorTest < Test::Unit::TestCase
+class VectorTest < MiniTest::Unit::TestCase
 
   def test_members_in_vector_created_lie_between_constraints
     10.times do
@@ -47,7 +48,7 @@ class VectorTest < Test::Unit::TestCase
   def test_two_vectors_with_different_degree_are_not_equal
     vector = Vector.new(2, [33, 3.2], [33, 3.2], lambda {|i, j| i + j})
     other_vector = Vector.new(3, [33, 3.2, 10], [33, 3.2, 10], lambda {|i, j, k| i + j})
-    assert_not_equal(vector, other_vector)
+    assert(vector != other_vector)
   end
   
 
@@ -62,7 +63,7 @@ class VectorTest < Test::Unit::TestCase
     vector = Vector.new(3, [33, 3.2, 10], [33, 3.2, 10], lambda {|i, j, k| i - j * k})
         assert_equal(1, vector.fitness)
     other_vector = Vector.new(3, [33, 3.2, 0], [33, 3.2, 0], lambda {|i, j, k| i - j * k})
-    assert_not_equal(vector, other_vector)
+    assert(vector != other_vector)
   end
 end
 

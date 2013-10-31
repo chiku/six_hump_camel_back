@@ -1,7 +1,8 @@
-require "test/unit"
+require File.expand_path("../test_helper", __FILE__)
+
 require File.expand_path("../../lib/population", __FILE__)
 
-class PopulationTest < Test::Unit::TestCase
+class PopulationTest < Minitest::Unit::TestCase
   def test_first_vector_in_population_one_can_be_accessed
     vector = Vector.new(2, [1, 2], [1, 2], lambda {|i, j| i + j})
     population = Population.new(1, 2, [1, 2], [1, 2], lambda {|i, j| i + j})
@@ -28,7 +29,7 @@ class PopulationTest < Test::Unit::TestCase
     vector, value, generations = population.differential_evolution(200000, 0.0005)
 
     assert_in_delta(value, 1.0, 0.0005);
-    assert_in_delta(vector[0], 0.0, 0.001)
+    assert_in_delta(vector[0], 0.0, 0.002)
   end
 
   def test_camel_hump_back_problem
