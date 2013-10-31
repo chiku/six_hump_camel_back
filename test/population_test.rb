@@ -28,7 +28,7 @@ class PopulationTest < Test::Unit::TestCase
     vector, value, generations = population.differential_evolution(200000, 0.0005)
 
     assert_in_delta(value, 1.0, 0.0005);
-    assert_in_delta(vector[0], 0.0, 0.0005)
+    assert_in_delta(vector[0], 0.0, 0.001)
   end
 
   def test_camel_hump_back_problem
