@@ -1,14 +1,14 @@
 require File.expand_path("../constraint", __FILE__)
 
 class Vector
-  attr_reader :degree, :fitness, :member
+  attr_reader :degree, :member
 
   def initialize(constraints, fitness_strategy)
-    @degree = constraints.size
+    @degree           = constraints.size
     @fitness_strategy = fitness_strategy
+    @member           = constraints.map(&:random)
 
-    @member = constraints.map(&:random)
-    @fitness = @fitness_strategy.call(*@member)
+    expire_fitness_cache
   end
 
   def [](index)
@@ -16,17 +16,22 @@ class Vector
   end
 
   def []=(index, value)
-    if (@member[index] == value)
-      return
-    end
+    expire_fitness_cache
     @member[index] = value
-    @fitness = @fitness_strategy.call(*@member)
+  end
+
+  def fitness
+    @fitness ||= @fitness_strategy.call(*@member)
   end
 
   def ==(other_value)
     if (@degree != other_value.degree)
-      false
+      false # TODO : fixme
     end
     (@member == other_value.member)
+  end
+
+  def expire_fitness_cache
+    @fitness = nil
   end
 end
