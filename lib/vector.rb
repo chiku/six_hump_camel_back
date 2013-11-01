@@ -4,7 +4,7 @@ class Vector
   attr_reader :members
 
   # TODO : vector shouldn't know the constraints it was generated from
-  # Constraints should be able to generate a vector member that lies within its range
+  # Constraints should be able to generate vector members that lies within its range
   def initialize(constraints_or_members)
     if constraints_or_members.is_a?(Array) && constraints_or_members.first.is_a?(Constraint)
       # TODO : deprecated code path
