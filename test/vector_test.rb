@@ -30,20 +30,6 @@ describe "Vector" do
       it "is the value of the fitness strategy solved with member values" do
         fitness.must_equal 1.0
       end
-
-      describe "when one member changes" do
-        it "is revaluated" do
-          vector[1] = -3.2
-          fitness.must_equal -2.2
-        end
-      end
-
-      describe "when member value is reset to older value" do
-        it "is remains the same" do
-          vector[1] = 0
-          fitness.must_equal 1.0
-        end
-      end
     end
 
     describe "#==" do
