@@ -7,12 +7,10 @@ class Vector
   # Constraints should be able to generate a vector member that lies within its range
   def initialize(constraints_or_members)
     if constraints_or_members.is_a?(Array) && constraints_or_members.first.is_a?(Constraint)
-      constraints = constraints_or_members
-      @degree  = constraints.size
-      @members = constraints.map(&:random)
+      # TODO : deprecated code path
+      @members = constraints_or_members.map(&:random)
     else
-      members = constraints_or_members
-      @members = members
+      @members = constraints_or_members
     end
   end
 
