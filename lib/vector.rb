@@ -25,10 +25,7 @@ class Vector
   end
 
   def ==(other_value)
-    if (@degree != other_value.degree)
-      false # TODO : fixme
-    end
-    (@member == other_value.member)
+    @member == other_value.member
   end
 
   def expire_fitness_cache

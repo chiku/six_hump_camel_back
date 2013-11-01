@@ -46,36 +46,17 @@ describe "Vector" do
       end
     end
 
-    describe "with three member" do
-      it "has a fitness" do
-        constraints = [Constraint.new(min: 33, max: 33), Constraint.new(min: 3.2, max: 3.2), Constraint.new(min: 10, max: 10)]
-        vector = Vector.new(constraints, lambda {|i, j, k| i - j * k})
-        assert_equal(1, vector.fitness)
+    describe "#==" do
+      it "doesn't equal another vector with different members" do
+        other_vector = Vector.new(constrains, add_two)
+        other_vector[0] = vector[0] + 1
+        vector.wont_equal other_vector
       end
-    end
 
-    it "doesn't equal another vector with different degree" do
-      constraints = [Constraint.new(min: 33, max: 33), Constraint.new(min: 3.2, max: 3.2)]
-      vector = Vector.new(constraints, lambda {|i, j| i + j})
-      other_constraints = [Constraint.new(min: 33, max: 33), Constraint.new(min: 3.2, max: 3.2), Constraint.new(min: 10, max: 10)]
-      other_vector = Vector.new(other_constraints, lambda {|i, j, k| i + j})
-      assert(vector != other_vector)
-    end
-  
-    it "equals a vector with same members" do
-      constraints = [Constraint.new(min: 33, max: 33), Constraint.new(min: 3.2, max: 3.2), Constraint.new(min: 10, max: 10)]
-      vector = Vector.new(constraints, lambda {|i, j, k| i - j * k})
-      other_constraints = [Constraint.new(min: 33, max: 33), Constraint.new(min: 3.2, max: 3.2), Constraint.new(min: 10, max: 10)]
-      other_vector = Vector.new(constraints, lambda {|i, j, k| i + j * k})
-      assert_equal(vector, other_vector)
-    end
-
-    it "doesn't equal a vector with one different member" do
-      constraints = [Constraint.new(min: 33, max: 33), Constraint.new(min: 3.2, max: 3.2), Constraint.new(min: 10, max: 10)]
-      vector = Vector.new(constraints, lambda {|i, j, k| i - j * k})
-      other_constraints = [Constraint.new(min: 33, max: 33), Constraint.new(min: 3.2, max: 3.2), Constraint.new(min: 0, max: 0)]
-      other_vector = Vector.new(other_constraints, lambda {|i, j, k| i - j * k})
-      assert(vector != other_vector)
+      it "equals a vector with same members" do
+        other_vector = Vector.new(constrains, add_two)
+        vector.must_equal other_vector
+      end
     end
   end
 end
