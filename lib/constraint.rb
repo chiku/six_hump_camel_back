@@ -15,7 +15,8 @@ class Constraint
     (@randomizer.call * range) + @min
   end
 
-  def randomizer=(randomizer)
-    @randomizer = randomizer
+  def with_constant_randomization(value)
+    @randomizer = -> { value }
+    self
   end
 end
