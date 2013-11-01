@@ -8,7 +8,7 @@ describe "Vector" do
     let(:constraint_minus1_to_1) { Constraint.new(min: -1, max: 1).with_constant_randomization(0.5) }
     let(:constraints) { [constraint_0_to_2, constraint_minus1_to_1] }
     let(:add_two) { ->(i, j) { i + j } }
-    let(:vector) { Vector.new(constraints, add_two) }
+    let(:vector) { Vector.new(constraints) }
 
     describe "members" do
       describe "after initialize" do
@@ -25,7 +25,7 @@ describe "Vector" do
     end
   
     describe "#fitness" do
-      let(:fitness) { vector.fitness }
+      let(:fitness) { vector.fitness(add_two) }
 
       it "is the value of the fitness strategy solved with member values" do
         fitness.must_equal 1.0
@@ -48,13 +48,13 @@ describe "Vector" do
 
     describe "#==" do
       it "doesn't equal another vector with different members" do
-        other_vector = Vector.new(constraints, add_two)
+        other_vector = Vector.new(constraints)
         other_vector[0] = vector[0] + 1
         vector.wont_equal other_vector
       end
 
       it "equals a vector with same members" do
-        other_vector = Vector.new(constraints, add_two)
+        other_vector = Vector.new(constraints)
         vector.must_equal other_vector
       end
     end

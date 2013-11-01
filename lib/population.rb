@@ -7,8 +7,8 @@ class Population
     @constraints = constraints
     @degree = @constraints.size
     @fitness_criteria = fitness_criteria
-    @vectors = @population.times.map { Vector.new(@constraints, @fitness_criteria) }
-    @total_fitness = @vectors.reduce(0) { |acc, vector| acc + vector.fitness }
+    @vectors = @population.times.map { Vector.new(@constraints) }
+    @total_fitness = @vectors.reduce(0) { |acc, vector| acc + vector.fitness(@fitness_criteria) }
   end
 
   def [](index)
@@ -27,11 +27,11 @@ class Population
     end
     
     constraints = values.map { |value| Constraint.new(min: value, max: value) }
-    Vector.new(constraints, @fitness_criteria)
+    Vector.new(constraints)
   end
 
   def best_vector
-    @vectors.min {|x, y| x.fitness <=> y.fitness }
+    @vectors.min {|x, y| x.fitness(@fitness_criteria) <=> y.fitness(@fitness_criteria) }
   end
 
   def crossover_vector(crossingover_factor=0.5)
@@ -44,7 +44,7 @@ class Population
 
     # TODO : the relation between constraints and vectors should be reversed
     constraints = values.map { |value| Constraint.new(min: value, max: value) }
-    Vector.new(constraints, @fitness_criteria)
+    Vector.new(constraints)
   end
 
   # TODO : move into a separate class - DifferentialEvolution
@@ -54,17 +54,17 @@ class Population
     while ((generations < max_generations) && (precision < convergance)) do
       target_vector = crossover_vector
       trial_vector_position = rand(@population)
-      if (target_vector.fitness < @vectors[trial_vector_position].fitness)
-        @total_fitness += (target_vector.fitness - @vectors[trial_vector_position].fitness)
+      if (target_vector.fitness(@fitness_criteria) < @vectors[trial_vector_position].fitness(@fitness_criteria))
+        @total_fitness += (target_vector.fitness(@fitness_criteria) - @vectors[trial_vector_position].fitness(@fitness_criteria))
         @vectors[trial_vector_position] = target_vector
       end
 
       generations += 1
     end
-    [@vectors[0], @vectors[0].fitness, generations]
+    [@vectors[0], @vectors[0].fitness(@fitness_criteria), generations]
   end
   
   def convergance
-    (@total_fitness/@population - best_vector.fitness).abs
+    (@total_fitness/@population - best_vector.fitness(@fitness_criteria)).abs
   end
 end
