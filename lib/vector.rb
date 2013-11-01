@@ -31,11 +31,6 @@ class Vector
   end
 
   def ==(other_value)
-    @members == other_value.member
-  end
-
-  # TODO : remove compatibility method after usages are removed
-  def member
-    @members
+    @members == other_value.members
   end
 end
