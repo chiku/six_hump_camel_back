@@ -21,8 +21,8 @@ class Population
     r3 = rand(@population)
 
     values = Array.new(@degree)
+    base_vector = @vectors[r1]
     0.upto(@degree-1) do |index| # TODO : simplify
-      base_vector = @vectors[r1]
       values[index] = base_vector[index] + difference_factor * (self[r2][index] - self[r3][index])
     end
     
@@ -42,6 +42,7 @@ class Population
       values[index] = rand() < crossingover_factor ? vector[index] : self[rand(@population)][index]
     end
 
+    # TODO : the relation between constraints and vectors should be reversed
     constraints = values.map { |value| Constraint.new(min: value, max: value) }
     Vector.new(constraints, @fitness_criteria)
   end
