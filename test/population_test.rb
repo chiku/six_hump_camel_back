@@ -11,7 +11,7 @@ describe "Population" do
 
   describe "#[]" do
     it "is a vector at the given position" do
-      population[0].must_equal Vector.new(constraints)
+      population[0].must_equal Vector.new([1.5, 0.0])
     end
   end
 

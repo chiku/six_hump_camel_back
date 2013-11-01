@@ -3,15 +3,8 @@ require File.expand_path("../constraint", __FILE__)
 class Vector
   attr_reader :members
 
-  # TODO : vector shouldn't know the constraints it was generated from
-  # Constraints should be able to generate vector members that lies within its range
-  def initialize(constraints_or_members)
-    if constraints_or_members.is_a?(Array) && constraints_or_members.first.is_a?(Constraint)
-      # TODO : deprecated code path
-      @members = constraints_or_members.map(&:random)
-    else
-      @members = constraints_or_members
-    end
+  def initialize(members)
+    @members = members
   end
 
   def [](index)

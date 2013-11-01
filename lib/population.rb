@@ -7,7 +7,7 @@ class Population
     @constraints = constraints
     @degree = @constraints.size
     @fitness_criteria = fitness_criteria
-    @vectors = @population.times.map { Vector.new(@constraints) }
+    @vectors = @population.times.map { Vector.new(@constraints.map(&:random)) }
     @total_fitness = @vectors.reduce(0) { |acc, vector| acc + vector.fitness(@fitness_criteria) }
   end
 
