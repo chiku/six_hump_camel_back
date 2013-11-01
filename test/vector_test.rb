@@ -4,11 +4,11 @@ require File.expand_path("../../lib/population", __FILE__)
 
 describe "Vector" do
   describe "when rand() returns 0.5" do
-    let(:constrain_0_to_2) { Constraint.new(min: 0, max: 2).with_constant_randomization(0.5) }
-    let(:constrain_minus1_to_1) { Constraint.new(min: -1, max: 1).with_constant_randomization(0.5) }
-    let(:constrains) { [constrain_0_to_2, constrain_minus1_to_1] }
+    let(:constraint_0_to_2) { Constraint.new(min: 0, max: 2).with_constant_randomization(0.5) }
+    let(:constraint_minus1_to_1) { Constraint.new(min: -1, max: 1).with_constant_randomization(0.5) }
+    let(:constraints) { [constraint_0_to_2, constraint_minus1_to_1] }
     let(:add_two) { ->(i, j) { i + j } }
-    let(:vector) { Vector.new(constrains, add_two) }
+    let(:vector) { Vector.new(constraints, add_two) }
 
     describe "members" do
       describe "after initialize" do
@@ -48,13 +48,13 @@ describe "Vector" do
 
     describe "#==" do
       it "doesn't equal another vector with different members" do
-        other_vector = Vector.new(constrains, add_two)
+        other_vector = Vector.new(constraints, add_two)
         other_vector[0] = vector[0] + 1
         vector.wont_equal other_vector
       end
 
       it "equals a vector with same members" do
-        other_vector = Vector.new(constrains, add_two)
+        other_vector = Vector.new(constraints, add_two)
         vector.must_equal other_vector
       end
     end

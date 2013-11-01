@@ -25,8 +25,8 @@ class Population
     r3 = rand(@population)
 
     values = Array.new(@degree)
-    0.upto(@degree-1) do |index|
-      base_vector = best_vector #@vectors[r1][index] 
+    0.upto(@degree-1) do |index| # TODO : simplify
+      base_vector = @vectors[r1]
       values[index] = base_vector[index] + @difference_factor * (self[r2][index] - self[r3][index])
     end
     
@@ -42,7 +42,7 @@ class Population
     vector = difference_vector
 
     values = Array.new(@degree)
-    0.upto(@degree-1) do |index|
+    0.upto(@degree-1) do |index| # TODO : simplify
       values[index] = rand() < @crossingover_factor ? vector[index] : self[rand(@population)][index]
     end
 
@@ -53,14 +53,20 @@ class Population
   def differential_evolution(max_generations, precision)
     generations = 0
 
-    while ((generations += 1) < max_generations && precision < (@total_fitness/@population - best_vector.fitness).abs) do
+    while ((generations < max_generations) && (precision < convergance)) do
       target_vector = crossover_vector
       trial_vector_position = rand(@population)
       if (target_vector.fitness < @vectors[trial_vector_position].fitness)
         @total_fitness += (target_vector.fitness - @vectors[trial_vector_position].fitness)
         @vectors[trial_vector_position] = target_vector
       end
+
+      generations += 1
     end
-    return [@vectors[0], @vectors[0].fitness, generations]
+    [@vectors[0], @vectors[0].fitness, generations]
+  end
+  
+  def convergance
+    (@total_fitness/@population - best_vector.fitness).abs
   end
 end
