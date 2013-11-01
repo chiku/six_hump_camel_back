@@ -17,11 +17,6 @@ describe "Vector" do
           vector[1].must_equal 0
         end
       end
-
-      it "can be set" do
-        vector[0] = 100
-        vector[0].must_equal 100
-      end
     end
   
     describe "#fitness" do
@@ -34,8 +29,7 @@ describe "Vector" do
 
     describe "#==" do
       it "doesn't equal another vector with different members" do
-        other_vector = Vector.new(constraints)
-        other_vector[0] = vector[0] + 1
+        other_vector = Vector.new([2, 0])
         vector.wont_equal other_vector
       end
 

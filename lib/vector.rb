@@ -20,11 +20,6 @@ class Vector
     @members[index]
   end
 
-  # TODO : don't mutate a vector after creation
-  def []=(index, value)
-    @members[index] = value
-  end
-
   # TODO : device some caching of fitness. The cache should exist outside Vector
   def fitness(fitness_strategy)
     fitness_strategy.call(*@members)
