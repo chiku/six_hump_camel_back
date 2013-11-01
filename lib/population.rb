@@ -2,14 +2,11 @@ require File.expand_path("../constraint", __FILE__)
 require File.expand_path("../vector", __FILE__)
 
 class Population
-  # TODO : reduce the number of arguments consumed here
-  def initialize(population, constraints, fitness_criteria, difference_factor=0.5, crossingover_factor=0.5)
+  def initialize(population, constraints, fitness_criteria)
     @population = population
     @constraints = constraints
     @degree = @constraints.size
     @fitness_criteria = fitness_criteria
-    @difference_factor = difference_factor
-    @crossingover_factor = crossingover_factor
     @vectors = @population.times.map { Vector.new(@constraints, @fitness_criteria) }
     @total_fitness = @vectors.reduce(0) { |acc, vector| acc + vector.fitness }
   end
@@ -18,7 +15,7 @@ class Population
     @vectors[index]
   end
 
-  def difference_vector
+  def difference_vector(difference_factor=0.5)
     r1 = rand(@population)
     r2 = rand(@population)
     r3 = rand(@population)
@@ -26,7 +23,7 @@ class Population
     values = Array.new(@degree)
     0.upto(@degree-1) do |index| # TODO : simplify
       base_vector = @vectors[r1]
-      values[index] = base_vector[index] + @difference_factor * (self[r2][index] - self[r3][index])
+      values[index] = base_vector[index] + difference_factor * (self[r2][index] - self[r3][index])
     end
     
     constraints = values.map { |value| Constraint.new(min: value, max: value) }
@@ -37,18 +34,19 @@ class Population
     @vectors.min {|x, y| x.fitness <=> y.fitness }
   end
 
-  def crossover_vector
+  def crossover_vector(crossingover_factor=0.5)
     vector = difference_vector
 
     values = Array.new(@degree)
     0.upto(@degree-1) do |index| # TODO : simplify
-      values[index] = rand() < @crossingover_factor ? vector[index] : self[rand(@population)][index]
+      values[index] = rand() < crossingover_factor ? vector[index] : self[rand(@population)][index]
     end
 
     constraints = values.map { |value| Constraint.new(min: value, max: value) }
     Vector.new(constraints, @fitness_criteria)
   end
 
+  # TODO : move into a separate class - DifferentialEvolution
   def differential_evolution(max_generations, precision)
     generations = 0
 
