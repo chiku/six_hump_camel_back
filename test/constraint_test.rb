@@ -24,9 +24,22 @@ describe "Constraint" do
   end
 
   describe "#random" do
-    it "is a value between inside the range" do
-      constraint.randomizer = -> { 0.5 }
-      constraint.random.must_equal 0.5
+    let(:random) { constraint.random }
+
+    describe "when rand() return 0.0" do
+      before { constraint.randomizer = -> { 0.5 } }
+
+      it "is less than the maximum value" do
+        random.must_be :<=, 2.0
+      end
+
+      it "is more than the minimum value" do
+        random.must_be :>=, -1.0
+      end
+
+      it "is midway between the maximum and minimum values" do
+        random.must_equal 0.5
+      end
     end
   end
 end

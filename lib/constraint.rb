@@ -11,11 +11,11 @@ class Constraint
     @max - @min
   end
 
-  def randomizer=(randomizer)
-    @randomizer = randomizer
-  end
-
   def random
     (@randomizer.call * range) + @min
+  end
+
+  def randomizer=(randomizer)
+    @randomizer = randomizer
   end
 end
