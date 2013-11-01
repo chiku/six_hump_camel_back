@@ -16,7 +16,7 @@ describe "Population" do
   end
 
   describe "#difference_vector" do
-    it "is a vector around the target separated by a difference betwen second and third vectors" do
+    it "is a vector around the target separated by a difference between second and third vectors" do
       population = Population.new(3, constraints, add_two)
       assert(population.difference_vector[0], 1.0)
     end

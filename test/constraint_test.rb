@@ -6,18 +6,6 @@ describe "Constraint" do
   describe "when rand() returns 0.5" do
     let(:constraint) { Constraint.new(max: 2.0, min: -1.0).with_constant_randomization(0.5) }
 
-    describe "#min" do
-      it "is the lower bound" do
-        constraint.min.must_equal -1.0
-      end
-    end
-
-    describe "#max" do
-      it "is the upper bound" do
-        constraint.max.must_equal 2.0
-      end
-    end
-
     describe "#range" do
       it "is the difference between the maximun and minimum" do
         constraint.range.must_equal 3.0
