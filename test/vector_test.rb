@@ -59,5 +59,14 @@ describe "Vector" do
         vector.scale_by(2).must_equal Vector.new([2, 0])
       end
     end
+
+    describe "#crossover_with" do
+      let(:cycle) { [0.2, 0.8].cycle }
+      let(:randomization) { -> { cycle.next } }
+
+      it "is composed of elements from itself and other vector selected by randomization" do
+        vector.crossover_with(another_vector, randomization: randomization, factor: 0.5).must_equal Vector.new([1, 1])
+      end
+    end
   end
 end

@@ -31,4 +31,10 @@ class Vector
   def scale_by(number)
     Vector.new(@members.map { |x| x * number })
   end
+
+  def crossover_with(other, options)
+    crossover_factor = options[:factor]
+    randomization    = options[:randomization]
+    Vector.new(@members.zip(other.members).map { |x, y| randomization.call < crossover_factor ? x : y })
+  end
 end

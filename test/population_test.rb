@@ -17,15 +17,14 @@ describe "Population" do
 
   describe "#difference_vector" do
     it "is a vector around the target separated by a difference between second and third vectors" do
-      population = Population.new(3, constraints, add_two)
-      assert(population.difference_vector[0], 1.0)
+      assert_equal(population.difference_vector[0], 1.5)
     end
   end
 
   it "has a crossover vector" do
     constraints = [Constraint.new(min: 1.0, max: 1.0)]
     population = Population.new(3, constraints, lambda {|i| i + 2})
-    assert(population.crossover_vector[0], 1.0)
+    assert_equal(population.crossover_vector[0], 1.0)
   end
 
   describe "with fitness criteria x squared plus one" do

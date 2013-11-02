@@ -28,16 +28,9 @@ class Population
     @vectors.min {|x, y| x.fitness(@fitness_criteria) <=> y.fitness(@fitness_criteria) }
   end
 
-  # TODO : move relevant parts of this method into Vector
   def crossover_vector(crossingover_factor=0.5)
     vector = difference_vector
-
-    values = Array.new(@degree)
-    0.upto(@degree-1) do |index| # TODO : simplify
-      values[index] = rand() < crossingover_factor ? vector[index] : self[rand(@population)][index]
-    end
-
-    Vector.new(values)
+    vector.crossover_with(self[rand(@population)], factor: crossingover_factor, randomization: -> { rand })
   end
 
   # TODO : move into a separate class - DifferentialEvolution
