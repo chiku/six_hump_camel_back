@@ -17,6 +17,18 @@ class Vector
   end
 
   def ==(other_value)
-    @members == other_value.members
+    other_value.respond_to?(:members) && @members == other_value.members
+  end
+
+  def -(other)
+    Vector.new(@members.zip(other.members).map { |x, y| x - y })
+  end
+
+  def +(other)
+    Vector.new(@members.zip(other.members).map { |x, y| x + y })
+  end
+
+  def scale_by(number)
+    Vector.new(@members.map { |x| x * number })
   end
 end

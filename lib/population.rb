@@ -20,19 +20,15 @@ class Population
     r2 = rand(@population)
     r3 = rand(@population)
 
-    values = Array.new(@degree)
     base_vector = @vectors[r1]
-    0.upto(@degree-1) do |index| # TODO : simplify
-      values[index] = base_vector[index] + difference_factor * (self[r2][index] - self[r3][index])
-    end
-    
-    Vector.new(values)
+    base_vector + (self[r2] - self[r3]).scale_by(difference_factor)
   end
 
   def best_vector
     @vectors.min {|x, y| x.fitness(@fitness_criteria) <=> y.fitness(@fitness_criteria) }
   end
 
+  # TODO : move relevant parts of this method into Vector
   def crossover_vector(crossingover_factor=0.5)
     vector = difference_vector
 
