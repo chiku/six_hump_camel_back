@@ -35,15 +35,19 @@ class Population
   end
 
   def best_vector
-    @vectors.min {|x, y| x.fitness <=> y.fitness }
+    @vectors.min { |x, y| x.fitness <=> y.fitness }
   end
 
-  def total_fitness
-    @vectors.reduce(0) { |acc, vector| acc + vector.fitness }
+  def best_fitness
+    fitnesses.min
+  end
+
+  def average_fitness
+    fitnesses.reduce(0, &:+) / @population
   end
 
   def convergance
-    (total_fitness/@population - best_vector.fitness).abs
+    (average_fitness - best_fitness).abs
   end
 
   # TODO : move into a separate class - DifferentialEvolution
@@ -60,7 +64,13 @@ class Population
 
       generations += 1
     end
-    [self[0].vector, self[0].fitness, generations]
+    [best_vector.vector, best_fitness, generations, convergance]
+  end
+
+  private
+
+  def fitnesses
+    @vectors.map(&:fitness)
   end
 
   def random_vector

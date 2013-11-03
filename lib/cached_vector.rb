@@ -29,10 +29,6 @@ class CachedVector
     vector.hash
   end
 
-  def [](index)
-    cache { vector[index] }
-  end
-
   def -(other)
     cache { vector - other.vector }
   end

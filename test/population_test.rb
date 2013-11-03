@@ -39,15 +39,21 @@ describe "Population" do
     end
   end
 
-  describe "#total_fitness" do
-    it "is the sum of all fitnesses in the population" do
-      population.total_fitness.must_equal 6
+  describe "#best_vector" do
+    it "is the vector with minimum value for fitness function in the population" do
+      population.best_vector.must_equal population[0]
     end
   end
 
-  describe "#best_vector" do
-    it "has the minimum value for fitness function in the population" do
-      population.best_vector.must_equal population[0]
+  describe "#best_fitness" do
+    it "is the minimum value for fitness function in the population" do
+      population.best_fitness.must_equal 1
+    end
+  end
+
+  describe "#average_fitness" do
+    it "is the average of all fitnesses in the population" do
+      population.average_fitness.must_equal 2
     end
   end
 
@@ -62,10 +68,10 @@ describe "Population" do
       constraints = [Constraint.new(min: -100, max: 100)]
       vectors = 100.times.map { Vector.new(constraints.map(&:random)) }
       population = Population.new(vectors, lambda {|x| x * x + 1 })
-      vector, value, generations = population.differential_evolution(200000, 0.0005)
+      vector, value, generations, convergance = population.differential_evolution(200000, 0.00005)
 
       assert_in_delta(value, 1.0, 0.0005);
-      assert_in_delta(vector[0], 0.0, 0.002)
+      assert_in_delta(vector[0], 0.0, 0.008)
     end
   end
 
