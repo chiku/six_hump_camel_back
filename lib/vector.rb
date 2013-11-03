@@ -33,8 +33,14 @@ class Vector
   end
 
   def crossover_with(other, options)
-    crossover_factor = options[:factor]
-    randomization    = options[:randomization]
-    Vector.new(@members.zip(other.members).map { |x, y| randomization.call < crossover_factor ? x : y })
+    factor        = options[:factor]
+    randomization = options[:randomization]
+    Vector.new(@members.zip(other.members).map { |x, y| crossover?(randomization, factor) ? x : y })
+  end
+
+  private
+
+  def crossover?(randomization, factor)
+    randomization.call > factor
   end
 end

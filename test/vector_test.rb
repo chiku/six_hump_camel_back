@@ -65,7 +65,15 @@ describe "Vector" do
       let(:randomization) { -> { cycle.next } }
 
       it "is composed of elements from itself and other vector selected by randomization" do
-        vector.crossover_with(another_vector, randomization: randomization, factor: 0.5).must_equal Vector.new([1, 1])
+        vector.crossover_with(another_vector, randomization: randomization, factor: 0.5).must_equal Vector.new([0, 0])
+      end
+
+      it "is the original vector when crossover-factor is 0" do
+        vector.crossover_with(another_vector, randomization: randomization, factor: 0).must_equal vector
+      end
+
+      it "is the partner vector when crossover-factor is 1" do
+        vector.crossover_with(another_vector, randomization: randomization, factor: 1).must_equal another_vector
       end
     end
   end

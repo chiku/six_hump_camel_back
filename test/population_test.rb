@@ -15,16 +15,36 @@ describe "Population" do
     end
   end
 
-  describe "#difference_vector" do
-    it "is a vector around the target separated by a difference between second and third vectors" do
-      assert_equal(population.difference_vector[0], 1.5)
+  describe "#[]=" do
+    before { population[0] = Vector.new([2, 3]) }
+
+    it "sets a vector at the given position" do
+      population[0].must_equal Vector.new([2, 3])
     end
   end
 
-  it "has a crossover vector" do
-    constraints = [Constraint.new(min: 1.0, max: 1.0)]
-    population = Population.new(3, constraints, lambda {|i| i + 2})
-    assert_equal(population.crossover_vector[0], 1.0)
+  describe "#difference_vector" do
+    it "is a vector around the target separated by a difference between second and third vectors" do
+      population[0] = Vector.new([1, 1])
+      population[1] = Vector.new([3, -1])
+      population[2] = Vector.new([2, 2])
+
+      population.difference_vector(factor: 0.5, r1: 0, r2: 1, r3: 2).must_equal Vector.new([1.5, -0.5])
+    end
+  end
+
+  describe "#crossover_vector" do
+    let(:cycle) { [0.2, 0.8].cycle }
+    let(:randomization) { -> { cycle.next } }
+
+    it "is a vector chosen from a target vector and another vector based on crossover factor" do
+      population[0] = Vector.new([1, 1])
+      population[1] = Vector.new([3, -1])
+      population[2] = Vector.new([2, 2])
+
+      target_vector = population[0]
+      population.crossover_vector(target_vector, factor: 0.5, position: 2, randomization: randomization).must_equal Vector.new([2, 1])
+    end
   end
 
   describe "with fitness criteria x squared plus one" do
