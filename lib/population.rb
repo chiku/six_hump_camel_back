@@ -2,13 +2,10 @@ require File.expand_path("../constraint", __FILE__)
 require File.expand_path("../vector", __FILE__)
 
 class Population
-  # TODO : vectors should be injected from outside. This would make @population unnecessary
-  def initialize(population, constraints, fitness_criteria)
-    @population       = population
-    @constraints      = constraints
-    @degree           = @constraints.size
+  def initialize(vectors, fitness_criteria)
+    @vectors          = vectors
+    @population       = vectors.size
     @fitness_criteria = fitness_criteria
-    @vectors          = @population.times.map { Vector.new(@constraints.map(&:random)) }
   end
 
   def [](index)
@@ -24,7 +21,6 @@ class Population
     r1     = options[:r1]
     r2     = options[:r2]
     r3     = options[:r3]
-
     base          = self[r1]
     offset        = self[r2] - self[r3]
     scaled_offset = offset.scale_by(factor)
