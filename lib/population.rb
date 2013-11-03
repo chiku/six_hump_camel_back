@@ -18,29 +18,27 @@ class Population
 
   def difference_vector(options)
     factor = options[:factor]
-    r1     = options[:r1]
-    r2     = options[:r2]
-    r3     = options[:r3]
-    base          = self[r1]
-    offset        = self[r2] - self[r3]
-    scaled_offset = offset.scale_by(factor)
+    v1     = options[:v1]
+    v2     = options[:v2]
+    v3     = options[:v3]
 
-    base + scaled_offset
+    v1 + (v2 - v3).scale_by(factor)
   end
 
-  def crossover_vector(target, options)
+  def crossover_vector(options)
+    target        = options[:target]
     factor        = options[:factor]
-    position      = options[:position]
+    partner       = options[:partner]
     randomization = options[:randomization]
 
-    target.crossover_with(self[position], factor: factor, randomization: randomization)
+    target.crossover_with(partner, factor: factor, randomization: randomization)
   end
 
   def best_vector
     @vectors.min {|x, y| x.fitness(@fitness_criteria) <=> y.fitness(@fitness_criteria) }
   end
 
-  # TODO : device some caching of fitness. The cache should exist outside Vector
+  # TODO : device caching of fitness.
   def total_fitness
     @vectors.reduce(0) { |acc, vector| acc + vector.fitness(@fitness_criteria) }
   end
@@ -54,8 +52,8 @@ class Population
     generations = 0
 
     while ((generations < max_generations) && (precision < convergance)) do
-      vector = difference_vector(factor: 0.5, r1: rand(@population), r2: rand(@population), r3: rand(@population))
-      target_vector = crossover_vector(vector, factor: 0.5, position: rand(@population), randomization: ->{ rand })
+      vector = difference_vector(factor: 0.5, v1: random_vector, v2: random_vector, v3: random_vector)
+      target_vector = crossover_vector(target: vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
       trial_vector_position = rand(@population)
       if (target_vector.fitness(@fitness_criteria) < self[trial_vector_position].fitness(@fitness_criteria))
         self[trial_vector_position] = target_vector
@@ -64,5 +62,9 @@ class Population
       generations += 1
     end
     [self[0], self[0].fitness(@fitness_criteria), generations]
+  end
+
+  def random_vector
+    @vectors.sample
   end
 end

@@ -25,7 +25,7 @@ describe "Population" do
 
   describe "#difference_vector" do
     it "is a vector around the target separated by a difference between second and third vectors" do
-      population.difference_vector(factor: 0.5, r1: 0, r2: 1, r3: 2).must_equal Vector.new(2, -1.5)
+      population.difference_vector(factor: 0.5, v1: population[0], v2: population[1], v3: population[2]).must_equal Vector.new(2, -1.5)
     end
   end
 
@@ -35,7 +35,7 @@ describe "Population" do
 
     it "is a vector chosen from a target vector and another vector based on crossover factor" do
       target_vector = population[0]
-      population.crossover_vector(target_vector, factor: 0.5, position: 1, randomization: randomization).must_equal Vector.new(3, 0)
+      population.crossover_vector(target_vector, factor: 0.5, partner: population[1], randomization: randomization).must_equal Vector.new(3, 0)
     end
   end
 
