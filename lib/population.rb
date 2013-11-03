@@ -1,9 +1,10 @@
 require File.expand_path("../constraint", __FILE__)
-require File.expand_path("../vector", __FILE__)
+require File.expand_path("../cached_vector", __FILE__)
 
 class Population
   def initialize(vectors, fitness_criteria)
-    @vectors          = vectors
+    @cacher           = CacheCreator.new(fitness_criteria)
+    @vectors          = vectors.map { |vector| @cacher.cache(vector) }
     @population       = vectors.size
     @fitness_criteria = fitness_criteria
   end
@@ -38,7 +39,6 @@ class Population
     @vectors.min {|x, y| x.fitness(@fitness_criteria) <=> y.fitness(@fitness_criteria) }
   end
 
-  # TODO : device caching of fitness.
   def total_fitness
     @vectors.reduce(0) { |acc, vector| acc + vector.fitness(@fitness_criteria) }
   end
@@ -61,7 +61,7 @@ class Population
 
       generations += 1
     end
-    [self[0], self[0].fitness(@fitness_criteria), generations]
+    [self[0].vector, self[0].fitness, generations]
   end
 
   def random_vector
