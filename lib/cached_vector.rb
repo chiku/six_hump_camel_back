@@ -1,3 +1,5 @@
+require 'forwardable'
+
 class CacheCreator
   def initialize(fitness_criteria)
     @fitness_criteria = fitness_criteria
@@ -8,17 +10,15 @@ class CacheCreator
   end
 end
 
-class CachedVector
-  attr_reader :vector, :fitness
+class CachedVector < Struct.new(:vector, :fitness, :cacher)
+  extend Forwardable
 
-  def initialize(vector, fitness, cacher)
-    @vector = vector
-    @fitness = fitness
-    @cacher = cacher
-  end
+  DELEGATED_METHODS = [:-, :+, :crossover_with]
 
-  def fitness
-    @fitness
+  DELEGATED_METHODS.each do |method|
+    define_method(method) do |other, *args|
+      as_cache { vector.send(method, *[other.vector, *args]) }
+    end
   end
 
   def ==(other_value)
@@ -29,25 +29,13 @@ class CachedVector
     vector.hash
   end
 
-  def -(other)
-    cache { vector - other.vector }
-  end
-
-  def +(other)
-    cache { vector + other.vector }
-  end
-
   def scale_by(number)
-    cache { vector.scale_by(number) }
-  end
-
-  def crossover_with(other, options)
-    cache { vector.crossover_with(other.vector, options) }
+    as_cache { vector.scale_by(number) }
   end
 
   private
 
-  def cache(&block)
-    @cacher.cache(yield)
+  def as_cache(&block)
+    cacher.cache(yield)
   end
 end
