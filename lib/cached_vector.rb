@@ -17,7 +17,7 @@ class CachedVector
     @cacher = cacher
   end
 
-  def fitness(ignore=nil)
+  def fitness
     @fitness
   end
 

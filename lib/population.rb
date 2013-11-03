@@ -6,7 +6,6 @@ class Population
     @cacher           = CacheCreator.new(fitness_criteria)
     @vectors          = vectors.map { |vector| @cacher.cache(vector) }
     @population       = vectors.size
-    @fitness_criteria = fitness_criteria
   end
 
   def [](index)
@@ -36,15 +35,15 @@ class Population
   end
 
   def best_vector
-    @vectors.min {|x, y| x.fitness(@fitness_criteria) <=> y.fitness(@fitness_criteria) }
+    @vectors.min {|x, y| x.fitness <=> y.fitness }
   end
 
   def total_fitness
-    @vectors.reduce(0) { |acc, vector| acc + vector.fitness(@fitness_criteria) }
+    @vectors.reduce(0) { |acc, vector| acc + vector.fitness }
   end
 
   def convergance
-    (total_fitness/@population - best_vector.fitness(@fitness_criteria)).abs
+    (total_fitness/@population - best_vector.fitness).abs
   end
 
   # TODO : move into a separate class - DifferentialEvolution
@@ -55,7 +54,7 @@ class Population
       vector = difference_vector(factor: 0.5, v1: random_vector, v2: random_vector, v3: random_vector)
       target_vector = crossover_vector(target: vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
       trial_vector_position = rand(@population)
-      if (target_vector.fitness(@fitness_criteria) < self[trial_vector_position].fitness(@fitness_criteria))
+      if (target_vector.fitness < self[trial_vector_position].fitness)
         self[trial_vector_position] = target_vector
       end
 
