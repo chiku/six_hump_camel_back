@@ -25,8 +25,8 @@ class Population
     r2     = options[:r2]
     r3     = options[:r3]
 
-    base          = @vectors[r1]
-    offset        = @vectors[r2] - @vectors[r3]
+    base          = self[r1]
+    offset        = self[r2] - self[r3]
     scaled_offset = offset.scale_by(factor)
 
     base + scaled_offset
@@ -37,7 +37,7 @@ class Population
     position      = options[:position]
     randomization = options[:randomization]
 
-    target.crossover_with(@vectors[position], factor: factor, randomization: randomization)
+    target.crossover_with(self[position], factor: factor, randomization: randomization)
   end
 
   def best_vector
@@ -61,12 +61,12 @@ class Population
       vector = difference_vector(factor: 0.5, r1: rand(@population), r2: rand(@population), r3: rand(@population))
       target_vector = crossover_vector(vector, factor: 0.5, position: rand(@population), randomization: ->{ rand })
       trial_vector_position = rand(@population)
-      if (target_vector.fitness(@fitness_criteria) < @vectors[trial_vector_position].fitness(@fitness_criteria))
-        @vectors[trial_vector_position] = target_vector
+      if (target_vector.fitness(@fitness_criteria) < self[trial_vector_position].fitness(@fitness_criteria))
+        self[trial_vector_position] = target_vector
       end
 
       generations += 1
     end
-    [@vectors[0], @vectors[0].fitness(@fitness_criteria), generations]
+    [self[0], self[0].fitness(@fitness_criteria), generations]
   end
 end
