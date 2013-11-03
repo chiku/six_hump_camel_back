@@ -47,6 +47,36 @@ describe "Population" do
     end
   end
 
+  describe "#total_fitness" do
+    it "is the sum of all fitnesses in the population" do
+      population[0] = Vector.new([1, 0])
+      population[1] = Vector.new([3, -1])
+      population[2] = Vector.new([1, 2])
+
+      population.total_fitness.must_equal 6
+    end
+  end
+
+  describe "#best_vector" do
+    it "has the minimum value for fitness function in the population" do
+      population[0] = Vector.new([1, 0])
+      population[1] = Vector.new([3, -1])
+      population[2] = Vector.new([1, 2])
+
+      population.best_vector.must_equal population[0]
+    end
+  end
+
+  describe "#convergance" do
+    it "is the difference of average fitness and best fitness" do
+      population[0] = Vector.new([1, 0])
+      population[1] = Vector.new([3, -1])
+      population[2] = Vector.new([1, 2])
+
+      population.convergance.must_equal 1
+    end
+  end
+
   describe "with fitness criteria x squared plus one" do
     it "has a minima at zero" do
       constraints = [Constraint.new(min: -100, max: 100)]
