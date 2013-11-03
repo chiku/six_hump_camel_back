@@ -21,11 +21,11 @@ class Vector
   end
 
   def -(other)
-    Vector.new(@members.zip(other.members).map { |x, y| x - y })
+    Vector.new(pair_with(other).map { |x, y| x - y })
   end
 
   def +(other)
-    Vector.new(@members.zip(other.members).map { |x, y| x + y })
+    Vector.new(pair_with(other).map { |x, y| x + y })
   end
 
   def scale_by(number)
@@ -35,12 +35,16 @@ class Vector
   def crossover_with(other, options)
     factor        = options[:factor]
     randomization = options[:randomization]
-    Vector.new(@members.zip(other.members).map { |x, y| crossover?(randomization, factor) ? x : y })
+    Vector.new(pair_with(other).map { |x, y| crossover?(randomization.call, factor) ? x : y })
   end
 
   private
 
-  def crossover?(randomization, factor)
-    randomization.call > factor
+  def pair_with(other)
+    @members.zip(other.members)
+  end
+
+  def crossover?(chance, threshold)
+    chance > threshold
   end
 end
