@@ -42,6 +42,12 @@ describe "Vector" do
       end
     end
 
+    describe "#hash" do
+      it "equals another vector with same members" do
+        vector.hash.must_equal Vector.new([1, 0]).hash
+      end
+    end
+
     describe "#-" do
       it "is the difference of individual elements" do
         (vector - another_vector).must_equal Vector.new([1, -1])

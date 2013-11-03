@@ -11,13 +11,16 @@ class Vector
     @members[index]
   end
 
-  # TODO : device some caching of fitness. The cache should exist outside Vector
   def fitness(fitness_strategy)
     fitness_strategy.call(*@members)
   end
 
   def ==(other_value)
     other_value.respond_to?(:members) && @members == other_value.members
+  end
+
+  def hash
+    @members.hash
   end
 
   def -(other)
