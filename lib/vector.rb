@@ -3,8 +3,8 @@ require File.expand_path("../constraint", __FILE__)
 class Vector
   attr_reader :members
 
-  def initialize(members)
-    @members = members
+  def initialize(*members)
+    @members = members.flatten
   end
 
   def [](index)

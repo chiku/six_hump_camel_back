@@ -1,32 +1,34 @@
 require File.expand_path("../test_helper", __FILE__)
 
+require File.expand_path("../../lib/constraint", __FILE__)
+require File.expand_path("../../lib/vector", __FILE__)
 require File.expand_path("../../lib/population", __FILE__)
 
 describe "Population" do
   let(:add_two) { ->(i, j) { i + j } }
-  let(:population) { Population.new([Vector.new([1, 0]), Vector.new([3, -1]), Vector.new([1, 2])], add_two) }
+  let(:population) { Population.new([Vector.new(1, 0), Vector.new(3, -1), Vector.new(1, 2)], add_two) }
 
   describe "#[]" do
     it "is a vector at the given position" do
-      population[0].must_equal Vector.new([1, 0])
+      population[0].must_equal Vector.new(1, 0)
     end
   end
 
   describe "#[]=" do
-    before { population[0] = Vector.new([2, 3]) }
+    before { population[0] = Vector.new(2, 3) }
 
     it "sets a vector at the given position" do
-      population[0].must_equal Vector.new([2, 3])
+      population[0].must_equal Vector.new(2, 3)
     end
   end
 
   describe "#difference_vector" do
     it "is a vector around the target separated by a difference between second and third vectors" do
-      population[0] = Vector.new([1, 1])
-      population[1] = Vector.new([3, -1])
-      population[2] = Vector.new([2, 2])
+      population[0] = Vector.new(1, 1)
+      population[1] = Vector.new(3, -1)
+      population[2] = Vector.new(2, 2)
 
-      population.difference_vector(factor: 0.5, r1: 0, r2: 1, r3: 2).must_equal Vector.new([1.5, -0.5])
+      population.difference_vector(factor: 0.5, r1: 0, r2: 1, r3: 2).must_equal Vector.new(1.5, -0.5)
     end
   end
 
@@ -35,20 +37,20 @@ describe "Population" do
     let(:randomization) { -> { cycle.next } }
 
     it "is a vector chosen from a target vector and another vector based on crossover factor" do
-      population[0] = Vector.new([1, 1])
-      population[1] = Vector.new([3, -1])
-      population[2] = Vector.new([2, 2])
+      population[0] = Vector.new(1, 1)
+      population[1] = Vector.new(3, -1)
+      population[2] = Vector.new(2, 2)
 
       target_vector = population[0]
-      population.crossover_vector(target_vector, factor: 0.5, position: 2, randomization: randomization).must_equal Vector.new([2, 1])
+      population.crossover_vector(target_vector, factor: 0.5, position: 2, randomization: randomization).must_equal Vector.new(2, 1)
     end
   end
 
   describe "#total_fitness" do
     it "is the sum of all fitnesses in the population" do
-      population[0] = Vector.new([1, 0])
-      population[1] = Vector.new([3, -1])
-      population[2] = Vector.new([1, 2])
+      population[0] = Vector.new(1, 0)
+      population[1] = Vector.new(3, -1)
+      population[2] = Vector.new(1, 2)
 
       population.total_fitness.must_equal 6
     end
@@ -56,9 +58,9 @@ describe "Population" do
 
   describe "#best_vector" do
     it "has the minimum value for fitness function in the population" do
-      population[0] = Vector.new([1, 0])
-      population[1] = Vector.new([3, -1])
-      population[2] = Vector.new([1, 2])
+      population[0] = Vector.new(1, 0)
+      population[1] = Vector.new(3, -1)
+      population[2] = Vector.new(1, 2)
 
       population.best_vector.must_equal population[0]
     end
@@ -66,9 +68,9 @@ describe "Population" do
 
   describe "#convergance" do
     it "is the difference of average fitness and best fitness" do
-      population[0] = Vector.new([1, 0])
-      population[1] = Vector.new([3, -1])
-      population[2] = Vector.new([1, 2])
+      population[0] = Vector.new(1, 0)
+      population[1] = Vector.new(3, -1)
+      population[2] = Vector.new(1, 2)
 
       population.convergance.must_equal 1
     end
