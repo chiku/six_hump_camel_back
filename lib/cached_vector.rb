@@ -13,11 +13,18 @@ end
 class CachedVector < Struct.new(:vector, :fitness, :cacher)
   extend Forwardable
 
-  DELEGATED_METHODS = [:-, :+, :crossover_with]
+  DELEGATED_METHODS_FOR_ONE_VECTOR = [:scale_by]
+  DELEGATED_METHODS_FOR_TWO_VECTORS = [:-, :+, :crossover_with]
 
-  DELEGATED_METHODS.each do |method|
-    define_method(method) do |other, *args|
-      as_cache { vector.send(method, *[other.vector, *args]) }
+  DELEGATED_METHODS_FOR_ONE_VECTOR.each do |method|
+    define_method(method) do |*args, &block|
+      cached { vector.send(method, *args, &block) }
+    end
+  end
+
+  DELEGATED_METHODS_FOR_TWO_VECTORS.each do |method|
+    define_method(method) do |other, *args, &block|
+      cached { vector.send(method, other.vector, *args, &block) }
     end
   end
 
@@ -26,16 +33,12 @@ class CachedVector < Struct.new(:vector, :fitness, :cacher)
   end
 
   def hash
-    vector.hash
-  end
-
-  def scale_by(number)
-    as_cache { vector.scale_by(number) }
+    @hash ||= vector.hash
   end
 
   private
 
-  def as_cache(&block)
+  def cached(&block)
     cacher.cache(yield)
   end
 end

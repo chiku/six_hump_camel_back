@@ -1,19 +1,22 @@
+require "forwardable"
+
 require File.expand_path("../constraint", __FILE__)
 require File.expand_path("../cached_vector", __FILE__)
+require File.expand_path("../cached_vectors", __FILE__)
 
 class Population
+  extend Forwardable
+
+  DELEGATED_METHODS = [:[], :[]=, :best_vector, :best_fitness, :average_fitness, :convergance]
+
+  DELEGATED_METHODS.each do |method|
+    def_delegator :@vectors, method, method
+  end
+
   def initialize(vectors, fitness_criteria)
-    @cacher           = CacheCreator.new(fitness_criteria)
-    @vectors          = vectors.map { |vector| @cacher.cache(vector) }
-    @population       = vectors.size
-  end
-
-  def [](index)
-    @vectors[index]
-  end
-
-  def []=(index, vector)
-    @vectors[index] = vector
+    @cacher     = CacheCreator.new(fitness_criteria)
+    @vectors    = CachedVectors.new(*vectors.map { |vector| @cacher.cache(vector) })
+    @population = vectors.size
   end
 
   def difference_vector(options)
@@ -34,22 +37,6 @@ class Population
     target.crossover_with(partner, factor: factor, randomization: randomization)
   end
 
-  def best_vector
-    @vectors.min { |x, y| x.fitness <=> y.fitness }
-  end
-
-  def best_fitness
-    fitnesses.min
-  end
-
-  def average_fitness
-    fitnesses.reduce(0, &:+) / @population
-  end
-
-  def convergance
-    (average_fitness - best_fitness).abs
-  end
-
   # TODO : move into a separate class - DifferentialEvolution
   def differential_evolution(max_generations, precision)
     generations = 0
@@ -58,20 +45,17 @@ class Population
       vector = difference_vector(factor: 0.5, v1: random_vector, v2: random_vector, v3: random_vector)
       target_vector = crossover_vector(target: vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
       trial_vector_position = rand(@population)
-      if (target_vector.fitness < self[trial_vector_position].fitness)
-        self[trial_vector_position] = target_vector
+      if (target_vector.fitness < @vectors[trial_vector_position].fitness)
+        @vectors[trial_vector_position] = target_vector
       end
 
       generations += 1
     end
+
     [best_vector.vector, best_fitness, generations, convergance]
   end
 
   private
-
-  def fitnesses
-    @vectors.map(&:fitness)
-  end
 
   def random_vector
     @vectors.sample
