@@ -11,8 +11,8 @@ class Vector
     @members[index]
   end
 
-  def fitness(fitness_strategy)
-    fitness_strategy.call(*@members)
+  def cost(cost_strategy)
+    cost_strategy.call(*@members)
   end
 
   def ==(other_value)

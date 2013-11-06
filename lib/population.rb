@@ -7,14 +7,14 @@ require File.expand_path("../cached_vectors", __FILE__)
 class Population
   extend Forwardable
 
-  DELEGATED_METHODS = [:[], :[]=, :best_vector, :best_fitness, :average_fitness, :convergance]
+  DELEGATED_METHODS = [:[], :[]=, :best_vector, :best_cost, :average_cost, :convergance]
 
   DELEGATED_METHODS.each do |method|
     def_delegator :@vectors, method, method
   end
 
-  def initialize(vectors, fitness_criteria)
-    @cacher     = CacheCreator.new(fitness_criteria)
+  def initialize(vectors, cost_criteria)
+    @cacher     = CacheCreator.new(cost_criteria)
     @vectors    = CachedVectors.new(*vectors.map { |vector| @cacher.cache(vector) })
     @population = vectors.size
   end
@@ -45,14 +45,14 @@ class Population
       vector = difference_vector(factor: 0.5, v1: random_vector, v2: random_vector, v3: random_vector)
       target_vector = crossover_vector(target: vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
       trial_vector_position = rand(@population)
-      if (target_vector.fitness < @vectors[trial_vector_position].fitness)
+      if (target_vector.cost < @vectors[trial_vector_position].cost)
         @vectors[trial_vector_position] = target_vector
       end
 
       generations += 1
     end
 
-    [best_vector.vector, best_fitness, generations, convergance]
+    [best_vector.vector, best_cost, generations, convergance]
   end
 
   private

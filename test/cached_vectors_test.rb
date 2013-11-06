@@ -27,7 +27,7 @@ describe "CachedVectors" do
   end
 
   describe "#best_vector" do
-    it "is the vector with minimum value for fitness function in the population" do
+    it "is the vector with minimum value for cost function in the population" do
       cached_vectors.best_vector.must_equal population[0]
     end
 
@@ -54,9 +54,9 @@ describe "CachedVectors" do
     end
   end
 
-  describe "#best_fitness" do
-    it "is the minimum value for fitness function in the population" do
-      cached_vectors.best_fitness.must_equal 1.0
+  describe "#best_cost" do
+    it "is the minimum value for cost function in the population" do
+      cached_vectors.best_cost.must_equal 1.0
     end
 
     describe "when a new vector replaces a member of the collectcion" do
@@ -65,7 +65,7 @@ describe "CachedVectors" do
         before { cached_vectors[2] = fitter_vector }
 
         it "is updated" do
-          cached_vectors.best_fitness.must_equal 0.0
+          cached_vectors.best_cost.must_equal 0.0
         end
       end
     end
@@ -76,15 +76,15 @@ describe "CachedVectors" do
         before { cached_vectors[2] = new_vector }
 
         it "is not updated" do
-          cached_vectors.best_fitness.must_equal 1.0
+          cached_vectors.best_cost.must_equal 1.0
         end
       end
     end
   end
 
-  describe "#total_fitness" do
-    it "is the sum of all fitnesses in the collection" do
-      cached_vectors.total_fitness.must_equal 6.0
+  describe "#total_cost" do
+    it "is the sum of all costes in the collection" do
+      cached_vectors.total_cost.must_equal 6.0
     end
 
     describe "when a new vector replaces a member of the collectcion" do
@@ -92,14 +92,14 @@ describe "CachedVectors" do
       before { cached_vectors[2] = new_vector }
 
       it "is updated" do
-        cached_vectors.total_fitness.must_equal 3.0
+        cached_vectors.total_cost.must_equal 3.0
       end
     end
   end
 
-  describe "#average_fitness" do
-    it "is the average of all fitnesses in the population" do
-      cached_vectors.average_fitness.must_equal 2.0
+  describe "#average_cost" do
+    it "is the average of all costes in the population" do
+      cached_vectors.average_cost.must_equal 2.0
     end
 
     describe "when a new vector replaces a member of the collectcion" do
@@ -107,13 +107,13 @@ describe "CachedVectors" do
       before { cached_vectors[2] = new_vector }
 
       it "is updated" do
-        cached_vectors.average_fitness.must_equal 1.0
+        cached_vectors.average_cost.must_equal 1.0
       end
     end
   end
 
   describe "#convergance" do
-    it "is the difference of average fitness and best fitness" do
+    it "is the difference of average cost and best cost" do
       cached_vectors.convergance.must_equal 1.0
     end
 

@@ -26,7 +26,7 @@ describe "Population" do
     end
   end
 
-  describe "with fitness criteria x squared plus one" do
+  describe "with cost criteria x squared plus one" do
     it "has a minima at zero" do
       constraints = [Constraint.new(min: -100, max: 100)]
       vectors = 100.times.map { Vector.new(constraints.map(&:random)) }

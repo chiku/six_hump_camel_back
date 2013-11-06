@@ -16,12 +16,12 @@ describe "Vector" do
       end
     end
 
-    describe "#fitness" do
+    describe "#cost" do
       let(:add_two) { ->(i, j) { i + j } }
-      let(:fitness) { vector.fitness(add_two) }
+      let(:cost) { vector.cost(add_two) }
 
-      it "is the value of the fitness strategy solved with member values" do
-        fitness.must_equal 1.0
+      it "is the value of the cost strategy solved with member values" do
+        cost.must_equal 1.0
       end
     end
 

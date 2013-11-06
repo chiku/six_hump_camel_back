@@ -1,16 +1,16 @@
 require 'forwardable'
 
 class CacheCreator
-  def initialize(fitness_criteria)
-    @fitness_criteria = fitness_criteria
+  def initialize(cost_criteria)
+    @cost_criteria = cost_criteria
   end
 
   def cache(vector)
-    CachedVector.new(vector, vector.fitness(@fitness_criteria), self)
+    CachedVector.new(vector, vector.cost(@cost_criteria), self)
   end
 end
 
-class CachedVector < Struct.new(:vector, :fitness, :cacher)
+class CachedVector < Struct.new(:vector, :cost, :cacher)
   extend Forwardable
 
   DELEGATED_METHODS_FOR_ONE_VECTOR = [:scale_by]
