@@ -14,9 +14,9 @@ class Population
   end
 
   def initialize(vectors, cost_criteria)
-    @cacher     = CacheCreator.new(cost_criteria)
-    @vectors    = CachedVectors.new(*vectors.map { |vector| @cacher.cache(vector) })
-    @population = vectors.size
+    @cacher          = CacheCreator.new(cost_criteria)
+    @vectors         = CachedVectors.new(*vectors.map { |vector| @cacher.cache(vector) })
+    @population_size = vectors.size
   end
 
   def difference_vector(options)
@@ -37,18 +37,11 @@ class Population
     target.crossover_with(partner, factor: factor, randomization: randomization)
   end
 
-  # TODO : move into a separate class - DifferentialEvolution
   def differential_evolution(max_generations, precision)
     generations = 0
 
     while ((generations < max_generations) && (precision < convergance)) do
-      vector = difference_vector(factor: 0.5, v1: random_vector, v2: random_vector, v3: random_vector)
-      target_vector = crossover_vector(target: vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
-      trial_vector_position = rand(@population)
-      if (target_vector.cost < @vectors[trial_vector_position].cost)
-        @vectors[trial_vector_position] = target_vector
-      end
-
+      replace_member_with_lower_cost_target
       generations += 1
     end
 
@@ -56,6 +49,16 @@ class Population
   end
 
   private
+
+  def replace_member_with_lower_cost_target
+    vector                = difference_vector(factor: 0.5, v1: random_vector, v2: random_vector, v3: random_vector)
+    target_vector         = crossover_vector(target: vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
+    trial_vector_position = rand(@population_size)
+
+    if (target_vector.cost < @vectors[trial_vector_position].cost)
+      @vectors[trial_vector_position] = target_vector
+    end
+  end
 
   def random_vector
     @vectors.sample
