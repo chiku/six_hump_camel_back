@@ -9,11 +9,11 @@ class CachedVectors
     @cached_vectors[index]
   end
 
-  def []=(index, cached_vector)
-    adjust_best_fitness(cached_vector)
-    adjust_total_fitness(@cached_vectors[index], cached_vector)
+  def []=(index, solved_vector)
+    adjust_best_fitness(solved_vector)
+    adjust_total_fitness(@cached_vectors[index], solved_vector)
 
-    @cached_vectors[index] = cached_vector
+    @cached_vectors[index] = solved_vector
   end
 
   def population_size

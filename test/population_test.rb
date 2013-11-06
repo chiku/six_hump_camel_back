@@ -2,7 +2,7 @@ require File.expand_path("../test_helper", __FILE__)
 
 require File.expand_path("../../lib/constraint", __FILE__)
 require File.expand_path("../../lib/vector", __FILE__)
-require File.expand_path("../../lib/cached_vector", __FILE__)
+require File.expand_path("../../lib/solved_vector", __FILE__)
 require File.expand_path("../../lib/cached_vectors", __FILE__)
 require File.expand_path("../../lib/population", __FILE__)
 

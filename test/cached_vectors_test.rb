@@ -12,7 +12,7 @@ describe "CachedVectors" do
   let(:cached_vectors) { CachedVectors.new(cacher.cache(Vector.new(1.0, 0.0)), cacher.cache(Vector.new(3.0, -1.0)), cacher.cache(Vector.new(1.0, 2.0))) }
 
   describe "#[]" do
-    it "is a cached vector at the given position" do
+    it "is a solved vector at the given position" do
       cached_vectors[0].must_equal cacher.cache(Vector.new(1.0, 0.0))
     end
   end

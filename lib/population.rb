@@ -1,7 +1,7 @@
 require "forwardable"
 
 require File.expand_path("../constraint", __FILE__)
-require File.expand_path("../cached_vector", __FILE__)
+require File.expand_path("../solved_vector", __FILE__)
 require File.expand_path("../cached_vectors", __FILE__)
 
 class Population
