@@ -3,7 +3,6 @@ require File.expand_path("../test_helper", __FILE__)
 require File.expand_path("../../lib/constraint", __FILE__)
 require File.expand_path("../../lib/vector", __FILE__)
 require File.expand_path("../../lib/solved_vector", __FILE__)
-require File.expand_path("../../lib/cached_vectors", __FILE__)
 require File.expand_path("../../lib/population", __FILE__)
 
 describe "Population" do
@@ -51,7 +50,8 @@ describe "Population" do
       puts "Convergance: #{convergance}"
 
       assert_in_delta(value, - 1.0316, 0.0005);
-      assert((vector[0] + 0.0898).abs < 0.0005 && (vector[1] - 0.7126).abs < 0.0005 || (vector[0] - 0.0898).abs < 0.0005 && (vector[1] + 0.7126).abs < 0.0005)
+      assert_in_delta(vector[0].abs, 0.0898, 0.0005)
+      assert_in_delta(vector[1].abs, 0.7126, 0.0005)
     end
   end
 end

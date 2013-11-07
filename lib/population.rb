@@ -2,7 +2,7 @@ require "forwardable"
 
 require File.expand_path("../constraint", __FILE__)
 require File.expand_path("../solved_vector", __FILE__)
-require File.expand_path("../cached_vectors", __FILE__)
+require File.expand_path("../solutions", __FILE__)
 
 class Population
   extend Forwardable
@@ -10,12 +10,12 @@ class Population
   DELEGATED_METHODS = [:[], :[]=, :best_vector, :best_cost, :average_cost, :convergance]
 
   DELEGATED_METHODS.each do |method|
-    def_delegator :@vectors, method, method
+    def_delegator :@solutions, method, method
   end
 
   def initialize(vectors, cost_criteria)
     @cacher          = CacheCreator.new(cost_criteria)
-    @vectors         = CachedVectors.new(*vectors.map { |vector| @cacher.cache(vector) })
+    @solutions       = Solutions.new(*vectors.map { |vector| @cacher.cache(vector) })
     @population_size = vectors.size
   end
 
@@ -55,12 +55,12 @@ class Population
     target_vector         = crossover_vector(target: vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
     trial_vector_position = rand(@population_size)
 
-    if (target_vector.cost < @vectors[trial_vector_position].cost)
-      @vectors[trial_vector_position] = target_vector
+    if (target_vector.cost < @solutions[trial_vector_position].cost)
+      @solutions[trial_vector_position] = target_vector
     end
   end
 
   def random_vector
-    @vectors.sample
+    @solutions.sample
   end
 end

@@ -1,19 +1,19 @@
-class CachedVectors
-  def initialize(*cached_vectors)
-    @cached_vectors = *cached_vectors
+class Solutions
+  def initialize(*solutions)
+    @solutions = *solutions
 
     cache_entities
   end
 
   def [](index)
-    @cached_vectors[index]
+    @solutions[index]
   end
 
   def []=(index, solved_vector)
     adjust_best_cost(solved_vector)
-    adjust_total_cost(@cached_vectors[index], solved_vector)
+    adjust_total_cost(@solutions[index], solved_vector)
 
-    @cached_vectors[index] = solved_vector
+    @solutions[index] = solved_vector
   end
 
   def population_size
@@ -41,16 +41,16 @@ class CachedVectors
   end
 
   def sample
-    @cached_vectors.sample
+    @solutions.sample
   end
 
   private
 
   def cache_entities
-    @population_size = @cached_vectors.size
-    @best_vector     = @cached_vectors.min { |x, y| x.cost <=> y.cost }
+    @population_size = @solutions.size
+    @best_vector     = @solutions.min { |x, y| x.cost <=> y.cost }
     @best_cost       = @best_vector.cost
-    @total_cost      = @cached_vectors.map(&:cost).reduce(0, &:+)
+    @total_cost      = @solutions.map(&:cost).reduce(0, &:+)
   end
 
   def adjust_best_cost(replacement_vector)
