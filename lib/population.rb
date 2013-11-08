@@ -51,8 +51,8 @@ class Population
   private
 
   def replace_member_with_lower_cost_target
-    vector                = difference_vector(factor: 0.5, v1: random_vector, v2: random_vector, v3: random_vector)
-    target_vector         = crossover_vector(target: vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
+    intermediate_vector   = difference_vector(factor: 0.5, v1: random_vector, v2: random_vector, v3: random_vector)
+    target_vector         = crossover_vector(target: intermediate_vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
     trial_vector_position = rand(@population_size)
 
     if (target_vector.cost < @solutions[trial_vector_position].cost)
