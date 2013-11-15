@@ -6,11 +6,11 @@ class CacheCreator
   end
 
   def cache(vector)
-    CachedVector.new(vector, vector.cost(@cost_criteria), self)
+    SolvedVector.new(vector, vector.cost(@cost_criteria), self)
   end
 end
 
-class CachedVector < Struct.new(:vector, :cost, :cacher)
+class SolvedVector < Struct.new(:vector, :cost, :cacher)
   extend Forwardable
 
   DELEGATED_METHODS_FOR_ONE_VECTOR = [:scale_by]

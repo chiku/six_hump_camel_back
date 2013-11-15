@@ -3,7 +3,7 @@ require File.expand_path("../test_helper", __FILE__)
 require File.expand_path("../../lib/vector", __FILE__)
 require File.expand_path("../../lib/solved_vector", __FILE__)
 
-describe "CachedVector" do
+describe "SolvedVector" do
   let(:vector) { Vector.new(1, 2) }
   let(:add_two) { ->(x, y) { x + y } }
   let(:creator) { CacheCreator.new(add_two) }
