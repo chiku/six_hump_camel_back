@@ -1,0 +1,10 @@
+Layout/LineLength:
+  Max: 160
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - 'test/**/*.rb'
+
+Style/Documentation:
+  Enabled: false  

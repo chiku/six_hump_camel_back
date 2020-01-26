@@ -54,9 +54,7 @@ module SixHumpCamelBack
       target_vector         = crossover_vector(target: intermediate_vector, factor: 0.5, partner: random_vector, randomization: -> { rand })
       trial_vector_position = rand(@population_size)
 
-      if target_vector.cost < @solutions[trial_vector_position].cost
-        @solutions[trial_vector_position] = target_vector
-      end
+      @solutions[trial_vector_position] = target_vector if target_vector.cost < @solutions[trial_vector_position].cost
     end
 
     def random_vector

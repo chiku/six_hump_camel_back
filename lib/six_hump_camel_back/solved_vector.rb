@@ -13,7 +13,7 @@ module SixHumpCamelBack
     end
   end
 
-  class SolvedVector < Struct.new(:vector, :cost, :cacher)
+  SolvedVector = Struct.new(:vector, :cost, :cacher) do
     extend Forwardable
 
     DELEGATED_METHODS_FOR_ONE_VECTOR = [:scale_by].freeze
@@ -31,8 +31,8 @@ module SixHumpCamelBack
       end
     end
 
-    def ==(other_value)
-      (vector == other_value) || (other_value.respond_to?(:vector) && vector == other_value.vector)
+    def ==(other)
+      (vector == other) || (other.respond_to?(:vector) && vector == other.vector)
     end
 
     def hash

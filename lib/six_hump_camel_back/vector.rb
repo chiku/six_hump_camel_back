@@ -16,8 +16,8 @@ module SixHumpCamelBack
       cost_strategy.call(*@members)
     end
 
-    def ==(other_value)
-      other_value.respond_to?(:members) && @members == other_value.members
+    def ==(other)
+      other.respond_to?(:members) && @members == other.members
     end
 
     def hash
