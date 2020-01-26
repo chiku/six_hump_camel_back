@@ -1,11 +1,11 @@
-require File.expand_path("../test_helper", __FILE__)
+require_relative "../test_helper"
 
-require File.expand_path("../../lib/constraint", __FILE__)
-require File.expand_path("../../lib/vector", __FILE__)
-require File.expand_path("../../lib/solved_vector", __FILE__)
-require File.expand_path("../../lib/population", __FILE__)
+require_relative "../../lib/six_hump_camel_back/constraint"
+require_relative "../../lib/six_hump_camel_back/vector"
+require_relative "../../lib/six_hump_camel_back/solved_vector"
+require_relative "../../lib/six_hump_camel_back/population"
 
-describe "Population" do
+describe "SixHumpCamelBack::Population" do
   let(:add_two) { ->(i, j) { i + j } }
   let(:cacher) { SixHumpCamelBack::CacheCreator.new(add_two) }
   let(:population) { SixHumpCamelBack::Population.new([
@@ -16,7 +16,7 @@ describe "Population" do
 
   describe "#difference_vector" do
     it "is a vector around the target separated by a difference between second and third vectors" do
-      population.difference_vector(factor: 0.5, v1: population[0], v2: population[1], v3: population[2]).must_equal cacher.cache(SixHumpCamelBack::Vector.new(2, -1.5))
+      value(population.difference_vector(factor: 0.5, v1: population[0], v2: population[1], v3: population[2])).must_equal cacher.cache(SixHumpCamelBack::Vector.new(2, -1.5))
     end
   end
 
@@ -25,7 +25,7 @@ describe "Population" do
     let(:randomization) { -> { cycle.next } }
 
     it "is a vector chosen from a target vector and another vector based on crossover factor" do
-      population.crossover_vector(target: population[0], factor: 0.5, partner: population[1], randomization: randomization).must_equal cacher.cache(SixHumpCamelBack::Vector.new(3, 0))
+      value(population.crossover_vector(target: population[0], factor: 0.5, partner: population[1], randomization: randomization)).must_equal cacher.cache(SixHumpCamelBack::Vector.new(3, 0))
     end
   end
 
@@ -34,7 +34,7 @@ describe "Population" do
       constraints = [SixHumpCamelBack::Constraint.new(min: -100, max: 100)]
       vectors = 100.times.map { SixHumpCamelBack::Vector.new(constraints.map(&:random)) }
       population = SixHumpCamelBack::Population.new(vectors, lambda {|x| x * x + 1 })
-      vector, value, generations, convergance = population.differential_evolution(200000, 0.00005)
+      vector, value, _generations, _convergance = population.differential_evolution(200000, 0.00005)
 
       assert_in_delta(value, 1.0, 0.0005);
       assert_in_delta(vector[0], 0.0, 0.008)

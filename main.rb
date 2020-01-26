@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 
-require File.expand_path("../lib/vector", __FILE__)
-require File.expand_path("../lib/constraint", __FILE__)
-require File.expand_path("../lib/population", __FILE__)
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
+
+require 'six_hump_camel_back'
 
 def camel_hump_back_problem
   constraints = [SixHumpCamelBack::Constraint.new(min: -3.0, max: 3.0), SixHumpCamelBack::Constraint.new(min: -2.0, max: 2.0)]
