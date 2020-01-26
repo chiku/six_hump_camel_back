@@ -1,6 +1,6 @@
 require_relative "../test_helper"
 
-require_relative "../../lib/six_hump_camel_back/constraint"
+require_relative "../../lib/six_hump_camel_back"
 
 describe "SixHumpCamelBack::Constraint" do
   describe "when rand() returns 0.5" do

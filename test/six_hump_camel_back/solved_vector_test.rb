@@ -1,7 +1,6 @@
 require_relative "../test_helper"
 
-require_relative "../../lib/six_hump_camel_back/vector"
-require_relative "../../lib/six_hump_camel_back/solved_vector"
+require_relative "../../lib/six_hump_camel_back"
 
 describe "SixHumpCamelBack::SolvedVector" do
   let(:vector) { SixHumpCamelBack::Vector.new(1, 2) }

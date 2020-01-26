@@ -1,9 +1,6 @@
 require_relative "../test_helper"
 
-require_relative "../../lib/six_hump_camel_back/constraint"
-require_relative "../../lib/six_hump_camel_back/vector"
-require_relative "../../lib/six_hump_camel_back/solutions"
-require_relative "../../lib/six_hump_camel_back/population"
+require_relative "../../lib/six_hump_camel_back"
 
 describe "SixHumpCamelBack::CachedVectors" do
   let(:add_two) { ->(i, j) { i + j } }

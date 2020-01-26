@@ -1,5 +1,3 @@
-require File.expand_path("../constraint", __FILE__)
-
 module SixHumpCamelBack
   class Vector
     attr_reader :members

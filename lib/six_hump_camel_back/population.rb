@@ -1,9 +1,5 @@
 require "forwardable"
 
-require File.expand_path("../constraint", __FILE__)
-require File.expand_path("../solved_vector", __FILE__)
-require File.expand_path("../solutions", __FILE__)
-
 module SixHumpCamelBack
   class Population
     extend Forwardable
