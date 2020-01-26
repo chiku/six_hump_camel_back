@@ -4,7 +4,7 @@ require File.expand_path("../../lib/constraint", __FILE__)
 
 describe "Constraint" do
   describe "when rand() returns 0.5" do
-    let(:constraint) { Constraint.new(max: 2.0, min: -1.0).with_constant_randomization(0.5) }
+    let(:constraint) { SixHumpCamelBack::Constraint.new(max: 2.0, min: -1.0).with_constant_randomization(0.5) }
 
     describe "#range" do
       it "is the difference between the maximun and minimum" do

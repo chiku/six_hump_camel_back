@@ -4,13 +4,13 @@ require File.expand_path("../../lib/vector", __FILE__)
 require File.expand_path("../../lib/solved_vector", __FILE__)
 
 describe "SolvedVector" do
-  let(:vector) { Vector.new(1, 2) }
+  let(:vector) { SixHumpCamelBack::Vector.new(1, 2) }
   let(:add_two) { ->(x, y) { x + y } }
-  let(:creator) { CacheCreator.new(add_two) }
+  let(:creator) { SixHumpCamelBack::CacheCreator.new(add_two) }
   let(:solved_vector) { creator.cache(vector) }
 
-  let(:vector_with_same_members) { Vector.new(1, 2) }
-  let(:vector_with_other_members) { Vector.new(1, -2) }
+  let(:vector_with_same_members) { SixHumpCamelBack::Vector.new(1, 2) }
+  let(:vector_with_other_members) { SixHumpCamelBack::Vector.new(1, -2) }
   let(:solution_with_same_members) { creator.cache(vector_with_same_members) }
   let(:solution_with_other_members) { creator.cache(vector_with_other_members) }
 
@@ -50,25 +50,25 @@ describe "SolvedVector" do
 
   describe "#scale_by" do
     it "is delegated to the underlying vector" do
-      solved_vector.scale_by(2).must_equal creator.cache(Vector.new(2, 4))
+      solved_vector.scale_by(2).must_equal creator.cache(SixHumpCamelBack::Vector.new(2, 4))
     end
   end
 
   describe "#-" do
     it "subtracts the underlying vectors" do
-      (solved_vector - solved_vector).must_equal creator.cache(Vector.new(0, 0))
+      (solved_vector - solved_vector).must_equal creator.cache(SixHumpCamelBack::Vector.new(0, 0))
     end
   end
 
   describe "#+" do
     it "adds the underlying vectors" do
-      (solved_vector + solved_vector).must_equal creator.cache(Vector.new(2, 4))
+      (solved_vector + solved_vector).must_equal creator.cache(SixHumpCamelBack::Vector.new(2, 4))
     end
   end
 
   describe "#scale_by" do
     it "multiplies the underlying vector with a scalar" do
-      solved_vector.scale_by(0.5).must_equal creator.cache(Vector.new(0.5, 1))
+      solved_vector.scale_by(0.5).must_equal creator.cache(SixHumpCamelBack::Vector.new(0.5, 1))
     end
   end
 
