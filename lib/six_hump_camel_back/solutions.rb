@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SixHumpCamelBack
   class Solutions
     def initialize(*solutions)
@@ -17,21 +19,13 @@ module SixHumpCamelBack
       @solutions[index] = solved_vector
     end
 
-    def population_size
-      @population_size
-    end
+    attr_reader :population_size
 
-    def best_vector
-      @best_vector
-    end
+    attr_reader :best_vector
 
-    def best_cost
-      @best_cost
-    end
+    attr_reader :best_cost
 
-    def total_cost
-      @total_cost
-    end
+    attr_reader :total_cost
 
     def average_cost
       total_cost / population_size

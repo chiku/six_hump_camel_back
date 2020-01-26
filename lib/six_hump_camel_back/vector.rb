@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SixHumpCamelBack
   class Vector
     attr_reader :members

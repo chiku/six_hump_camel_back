@@ -1,10 +1,12 @@
-require "forwardable"
+# frozen_string_literal: true
+
+require 'forwardable'
 
 module SixHumpCamelBack
   class Population
     extend Forwardable
 
-    DELEGATED_METHODS = [:[], :[]=, :best_vector, :best_cost, :average_cost, :convergance]
+    DELEGATED_METHODS = %i[\[\] \[\]= best_vector best_cost average_cost convergance].freeze
 
     DELEGATED_METHODS.each do |method|
       def_delegator :@solutions, method, method
@@ -37,7 +39,7 @@ module SixHumpCamelBack
     def differential_evolution(max_generations, precision)
       generations = 0
 
-      while ((generations < max_generations) && (precision < convergance)) do
+      while (generations < max_generations) && (precision < convergance)
         replace_member_with_lower_cost_target
         generations += 1
       end
@@ -49,10 +51,10 @@ module SixHumpCamelBack
 
     def replace_member_with_lower_cost_target
       intermediate_vector   = difference_vector(factor: 0.5, v1: random_vector, v2: random_vector, v3: random_vector)
-      target_vector         = crossover_vector(target: intermediate_vector, factor: 0.5, partner: random_vector, randomization: ->{ rand })
+      target_vector         = crossover_vector(target: intermediate_vector, factor: 0.5, partner: random_vector, randomization: -> { rand })
       trial_vector_position = rand(@population_size)
 
-      if (target_vector.cost < @solutions[trial_vector_position].cost)
+      if target_vector.cost < @solutions[trial_vector_position].cost
         @solutions[trial_vector_position] = target_vector
       end
     end

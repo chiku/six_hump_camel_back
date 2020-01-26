@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SixHumpCamelBack
   class Constraint
     def initialize(options)

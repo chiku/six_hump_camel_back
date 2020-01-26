@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'forwardable'
 
 module SixHumpCamelBack
@@ -14,8 +16,8 @@ module SixHumpCamelBack
   class SolvedVector < Struct.new(:vector, :cost, :cacher)
     extend Forwardable
 
-    DELEGATED_METHODS_FOR_ONE_VECTOR = [:scale_by]
-    DELEGATED_METHODS_FOR_TWO_VECTORS = [:-, :+, :crossover_with]
+    DELEGATED_METHODS_FOR_ONE_VECTOR = [:scale_by].freeze
+    DELEGATED_METHODS_FOR_TWO_VECTORS = %i[- + crossover_with].freeze
 
     DELEGATED_METHODS_FOR_ONE_VECTOR.each do |method|
       define_method(method) do |*args, &block|
@@ -39,7 +41,7 @@ module SixHumpCamelBack
 
     private
 
-    def cached(&block)
+    def cached
       cacher.cache(yield)
     end
   end
