@@ -46,12 +46,7 @@ describe "SixHumpCamelBack::Population" do
       ]
       vectors = 100.times.map { SixHumpCamelBack::Vector.new(constraints.map(&:random)) }
       population = SixHumpCamelBack::Population.new(vectors, lambda {|x, y|  ( 4.0 - 2.1*x*x +  x*x*x*x/3.0) * x*x + x*y + ( -4.0  +  4.0*y*y) * y*y })
-      vector, value, generations, convergance = population.differential_evolution(200000, 0.00005)
-
-      puts "The solution vector is: #{vector[0]}, #{vector[1]}"
-      puts "The answer is: #{value}"
-      puts "Generations run: #{generations}"
-      puts "Convergance: #{convergance}"
+      vector, value, _generations, _convergance = population.differential_evolution(200000, 0.00005)
 
       assert_in_delta(value, - 1.0316, 0.0005);
       assert_in_delta(vector[0].abs, 0.0898, 0.0005)

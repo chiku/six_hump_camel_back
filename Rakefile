@@ -1,7 +1,10 @@
 require 'rake/testtask'
+require 'rubocop/rake_task'
 
-Rake::TestTask.new do |t|
+Rake::TestTask.new(:test) do |t|
   t.pattern = "test/**/*_test.rb"
 end
 
-task :default => :test
+RuboCop::RakeTask.new(:lint)
+
+task default: %i[test]
