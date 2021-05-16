@@ -1,10 +1,44 @@
+require:
+  - rubocop-rake
+  - rubocop-minitest
+
+AllCops:
+  EnabledByDefault: true
+
 Layout/LineLength:
-  Max: 160
+  Max: 150
 
 Metrics/BlockLength:
   Exclude:
-    - 'Rakefile'
     - 'test/**/*.rb'
 
+Metrics/ModuleLength:
+  Exclude:
+    - 'test/**/*.rb'
+
+Lint/BinaryOperatorWithIdenticalOperands:
+  Exclude:
+    - 'test/**/*.rb'
+
+Naming/MethodParameterName:
+  AllowedNames:
+    - 'x'
+    - 'y'
+
+Style/AccessModifierDeclarations:
+  EnforcedStyle: inline
+
 Style/Documentation:
-  Enabled: false  
+  Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: false
+
+Bundler/GemComment:
+  Enabled: false
+
+Style/Copyright:
+  Enabled: false
+
+Lint/ConstantResolution:
+  Enabled: false

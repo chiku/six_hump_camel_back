@@ -10,7 +10,7 @@ describe 'SixHumpCamelBack::Constraint' do
 
     describe '#range' do
       it 'is the difference between the maximun and minimum' do
-        value(constraint.range).must_equal 3.0
+        value(constraint.range).must_equal(3.0)
       end
     end
 
@@ -18,15 +18,15 @@ describe 'SixHumpCamelBack::Constraint' do
       let(:random) { constraint.random }
 
       it 'is less than the maximum value' do
-        value(random).must_be :<=, 2.0
+        value(random).must_be(:<=, 2.0)
       end
 
       it 'is more than the minimum value' do
-        value(random).must_be :>=, -1.0
+        value(random).must_be(:>=, -1.0)
       end
 
       it 'is midway between the maximum and minimum values' do
-        value(random).must_equal 0.5
+        value(random).must_equal(0.5)
       end
     end
   end

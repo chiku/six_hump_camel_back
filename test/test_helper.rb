@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 begin
-  require 'simplecov'
+  require('simplecov')
   SimpleCov.start do
-    add_filter '/test/'
-    add_filter '/vendor/'
+    add_filter('/test/')
   end
 rescue LoadError
-  puts "\nPlease install simplecov to generate coverage report!\n\n"
+  puts("\nPlease install simplecov to generate coverage report!\n\n")
 end
 
 require 'minitest/autorun'

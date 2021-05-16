@@ -42,13 +42,11 @@ module SixHumpCamelBack
       Vector.new(pair_with(other).map { |x, y| crossover?(randomization.call, factor) ? x : y })
     end
 
-    private
-
-    def pair_with(other)
+    private def pair_with(other)
       @members.zip(other.members)
     end
 
-    def crossover?(chance, threshold)
+    private def crossover?(chance, threshold)
       chance > threshold
     end
   end

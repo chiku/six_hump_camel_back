@@ -5,3 +5,8 @@ Six hump camel back problem
 ===========================
 
 Solution to six hump camel back back problem implemented in ruby.
+
+License
+-------
+
+This library is released under the MIT license. Please refer LICENSE for more details.

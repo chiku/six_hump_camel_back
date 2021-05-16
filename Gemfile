@@ -8,6 +8,9 @@ end
 
 group :test do
   gem 'minitest', '~> 5.14'
-  gem 'rubocop', '~> 0.79.0'
-  gem 'simplecov', '~> 0.17.1'
+  gem 'rubocop', '>= 1.14.0', require: false
+  gem 'rubocop-rake', '~> 0.5.1', require: false
+  gem 'simplecov', '~> 0.17.1', require: false
 end
+
+gem 'rubocop-minitest', '~> 0.12.1'

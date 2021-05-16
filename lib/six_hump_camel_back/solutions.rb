@@ -19,13 +19,7 @@ module SixHumpCamelBack
       @solutions[index] = solved_vector
     end
 
-    attr_reader :population_size
-
-    attr_reader :best_vector
-
-    attr_reader :best_cost
-
-    attr_reader :total_cost
+    attr_reader :population_size, :best_vector, :best_cost, :total_cost
 
     def average_cost
       total_cost / population_size
@@ -39,23 +33,21 @@ module SixHumpCamelBack
       @solutions.sample
     end
 
-    private
-
-    def cache_entities
+    private def cache_entities
       @population_size = @solutions.size
       @best_vector     = @solutions.min { |x, y| x.cost <=> y.cost }
       @best_cost       = @best_vector.cost
       @total_cost      = @solutions.map(&:cost).reduce(0, &:+)
     end
 
-    def adjust_best_cost(replacement_vector)
+    private def adjust_best_cost(replacement_vector)
       return unless replacement_vector.cost < @best_vector.cost
 
       @best_vector = replacement_vector
       @best_cost   = replacement_vector.cost
     end
 
-    def adjust_total_cost(replaced_vector, replacement_vector)
+    private def adjust_total_cost(replaced_vector, replacement_vector)
       @total_cost = @total_cost - replaced_vector.cost + replacement_vector.cost
     end
   end
