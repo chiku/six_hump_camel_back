@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/chiku/six_hump_camel_back.png?branch=master)](https://travis-ci.org/chiku/six_hump_camel_back)
+[![Build Status](https://www.travis-ci.com/chiku/six_hump_camel_back.svg?branch=master)](https://www.travis-ci.com/chiku/six_hump_camel_back)
 [![Code Climate](https://codeclimate.com/github/chiku/six_hump_camel_back.png)](https://codeclimate.com/github/chiku/six_hump_camel_back)
 
 Six hump camel back problem
