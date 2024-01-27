@@ -41,7 +41,7 @@ module SixHumpCamelBack
     end
 
     private def adjust_best_cost(replacement_vector)
-      return unless replacement_vector.cost < @best_vector.cost
+      return if replacement_vector.cost >= @best_vector.cost
 
       @best_vector = replacement_vector
       @best_cost   = replacement_vector.cost

@@ -3,14 +3,13 @@
 source 'https://rubygems.org'
 
 group :development, :test do
-  gem 'rake', '~> 13.0'
+  gem 'rake', '~> 13.1'
 end
 
 group :test do
-  gem 'minitest', '~> 5.14'
-  gem 'rubocop', '>= 1.14.0', require: false
-  gem 'rubocop-rake', '~> 0.5.1', require: false
-  gem 'simplecov', '~> 0.17.1', require: false
+  gem 'minitest', '~> 5.21.2'
+  gem 'rubocop', '~> 1.60.2', require: false
+  gem 'rubocop-minitest', '~> 0.34.5', require: false
+  gem 'rubocop-rake', '~> 0.6.0', require: false
+  gem 'simplecov', '~> 0.22.0', require: false
 end
-
-gem 'rubocop-minitest', '~> 0.12.1'

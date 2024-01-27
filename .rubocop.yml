@@ -42,3 +42,6 @@ Style/Copyright:
 
 Lint/ConstantResolution:
   Enabled: false
+
+Style/ArrayFirstLast:
+  Enabled: false

@@ -11,7 +11,7 @@ vectors     = 50.times.map { SixHumpCamelBack::Vector.new(constraints.map(&:rand
 population  = SixHumpCamelBack::Population.new(
   vectors,
   lambda { |x, y|
-    (4.0 - 2.1 * x * x + x * x * x * x / 3.0) * x * x + x * y + (-4.0 + 4.0 * y * y) * y * y
+    ((4.0 - (x * 2.1 * x) + (x * x * x * x / 3.0)) * x * x) + (x * y) + (((y * 4.0 * y) + -4.0) * y * y)
   }
 )
 

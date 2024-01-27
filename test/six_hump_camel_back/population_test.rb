@@ -51,7 +51,7 @@ describe 'SixHumpCamelBack::Population' do
     it 'has a minima at zero' do
       constraints = [SixHumpCamelBack::Constraint.new(min: -100, max: 100)]
       vectors = 100.times.map { SixHumpCamelBack::Vector.new(constraints.map(&:random)) }
-      population = SixHumpCamelBack::Population.new(vectors, ->(x) { x * x + 1 })
+      population = SixHumpCamelBack::Population.new(vectors, ->(x) { (x * x) + 1 })
       vector, value, _generations, _convergance = population.differential_evolution(200_000, 0.00005)
 
       assert_in_delta(value, 1.0, 0.0005)
@@ -66,7 +66,7 @@ describe 'SixHumpCamelBack::Population' do
       population = SixHumpCamelBack::Population.new(
         vectors,
         lambda { |x, y|
-          (4.0 - 2.1 * x * x + x * x * x * x / 3.0) * x * x + x * y + (-4.0 + 4.0 * y * y) * y * y
+          ((4.0 - (x * 2.1 * x) + (x * x * x * x / 3.0)) * x * x) + (x * y) + (((y * 4.0 * y) + -4.0) * y * y)
         }
       )
       vector, value, _generations, _convergance = population.differential_evolution(200_000, 0.00005)
